@@ -1,0 +1,12 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^(.*)$ public/$1 [L]
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+<IfModule mod_php5.c>
+php_value allow_url_fopen On
+php_value upload_max_filesize 5M
+php_value post_max_size 5M
+php_value max_file_uploads 100
+</IfModule>
