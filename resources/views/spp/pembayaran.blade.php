@@ -148,6 +148,14 @@
                         <div class="col-4">&nbsp;</div>
                         </div>
                     </div>
+                    <p> <p>
+                   <!--  <div class="col-12">
+                        <div class="alert alert-success text-center" role="alert">
+                            <p class="mb-0">Siswa dengan NIM : {{$siswa->nis}} A/N {{$siswa->nama_siswa}}, Memiliki tagihan untuk pembayaran uang SPP sebesar</p>
+                            <h4 class="alert-heading font-24">Rp.{{number_format($tunggakan)}}</h4>
+                        </div>
+                    </div> -->
+
 
                		</form>
               
@@ -171,7 +179,7 @@
                          	<thead>
 		                        <tr>
 		                            <th width="5%">No</th>
-		                            <th> Tanggal Bayar</th>
+		                            <th>Tanggal Bayar</th>
 		                            <th>Bulan</th>  
 		                            <th>Tahun</th>  
 		                            <th>Jumlah</th>  
@@ -214,49 +222,206 @@
                         <p/>
                         <center><h5>KARTU SPP</h5></center>
                         <p/>
-                        <div class="row">
-                            <div class="col-md-3 col-sm-12">
-                             <div class="card card-body text-center">
-                                <h6>Juli | 2020</h6>
-                                <span>
-                                <img src="{{ URL::asset('assets/images/stempel-lunas.png')}}" alt="" height="60">
-                                </span>
-                                <h6 class="text-success">Fri, 19 Mar 2020</h6>
-                             </div>
-                            </div>
 
-                            <div class="col-md-3 col-sm-12">
-                             <div class="card card-body text-center">
-                                <h6>Agustus | 2020</h6>
-                                <span>
-                                <img src="{{ URL::asset('assets/images/stempel-lunas.png')}}" alt="" height="60">
-                                </span>
-                                <h6 class="text-success">Fri, 19 Mar 2021</h6>
-                             </div>
+                        <nav>                 
+                            <div class="nav nav-tabs nav-fill nav-pills" id="nav-tab" role="tablist">
+                                <a class="nav-item nav-link active" id="nav-vii-tab" data-toggle="tab" href="#nav-vii" role="tab" aria-controls="nav-vii" aria-selected="true">VII</a>
+                                <a class="nav-item nav-link" id="nav-viii-tab" data-toggle="tab" href="#nav-viii" role="tab" aria-controls="nav-viii" aria-selected="false">VIII</a>
+                                <a class="nav-item nav-link" id="nav-ix-tab" data-toggle="tab" href="#nav-ix" role="tab" aria-controls="nav-ix" aria-selected="false">IX</a>
                             </div>
+                        </nav>
 
-                            <div class="col-md-3 col-sm-12">
-                             <div class="card card-body text-center">
-                                <h6>September | 2020</h6>
-                                <div class="alert alert-success text-center mb-0" role="alert">
-                                    <p class="mb-0">Sisa Tagihan</p>
-                                    <h4 class="alert-heading font-14 mb-0">Rp.250.000</h4>
-                                </div>                             
-                                <h6 class="text-success mb-0">Fri, 19 Mar 2021</h6>
-                             </div>
-                            </div>
+                <div class="tab-content" id="nav-tabContent" style="padding:16px;">
+                    <div class="tab-pane fade show active" id="nav-vii" role="tabpanel" aria-labelledby="nav-vii-tab">
+                        <div class="row">               
+                            @foreach( $bulan as $bl)
+                            @if($bl->posisi <= 6)
+                               @php
+                               $tahun = $tahunSPP;
+                               $spp = DB::table('tb_pembayaran')
+                               ->leftJoin('tb_siswa','tb_siswa.nis','tb_pembayaran.nis')
+                               ->leftJoin('tb_jenis_pembayaran','tb_jenis_pembayaran.id_jenis_pem','tb_pembayaran.id_jenis_pem')
+                               ->leftJoin('tb_bulan_ajaran','tb_bulan_ajaran.id_ajaran','tb_pembayaran.pembayaran_bulan')
+                               ->where('tb_pembayaran.nis',$id)
+                               ->where('tb_pembayaran.id_jenis_pem',1)
+                               ->where('tb_bulan_ajaran.id_ajaran',$bl->id_ajaran)
+                               ->where('tb_pembayaran.pembayaran_tahun',$tahun)
+                               ->select('tb_bulan_ajaran.bulan','tb_pembayaran.dibuat_pada',DB::raw('SUM(tb_pembayaran.jumlah) as jml'))
+                               ->get();
+                               @endphp
+                            @else
+                               @php
+                               $tahun = $tahunSPP+1;
+                               $spp = DB::table('tb_pembayaran')
+                               ->leftJoin('tb_siswa','tb_siswa.nis','tb_pembayaran.nis')
+                               ->leftJoin('tb_jenis_pembayaran','tb_jenis_pembayaran.id_jenis_pem','tb_pembayaran.id_jenis_pem')
+                               ->leftJoin('tb_bulan_ajaran','tb_bulan_ajaran.id_ajaran','tb_pembayaran.pembayaran_bulan')
+                               ->where('tb_pembayaran.nis',$id)
+                               ->where('tb_pembayaran.id_jenis_pem',1)
+                               ->where('tb_bulan_ajaran.id_ajaran',$bl->id_ajaran)
+                               ->where('tb_pembayaran.pembayaran_tahun',$tahun)
+                               ->select('tb_bulan_ajaran.bulan','tb_pembayaran.dibuat_pada',DB::raw('SUM(tb_pembayaran.jumlah) as jml'))
+                               ->get();
+                               @endphp
+                            @endif
 
+                            @foreach($spp as $data)
                             <div class="col-md-3 col-sm-12">
                              <div class="card card-body text-center">
-                                <h6>Oktober | 2020</h6>
-                                <div class="alert alert-success text-center mb-0" role="alert">
-                                    <p class="mb-0">Sisa Tagihan</p>
-                                    <h4 class="alert-heading font-14 mb-0">Rp.500.000</h4>
-                                </div>  
-                                <h6 class="text-success">Fri, 19 Mar 2021</h6>
+                                <h6>{{$bl->bulan}} | {{$tahun}}</h6>
+                                @if($data->jml == 0)
+                                    <div class="alert alert-success text-center mb-0" role="alert">
+                                        <p class="mb-0">Sisa</p>
+                                        <h4 class="alert-heading font-14 mb-0">Rp.{{number_format($biayaspp)}}</h4>
+                                    </div> 
+                                @elseif($biayaspp-$data->jml <= 0)
+                                    <span>
+                                    <img src="{{ URL::asset('assets/images/stempel-lunas.png')}}" alt="" height="60">
+                                    </span>
+                                @else
+                                    <div class="alert alert-success text-center mb-0" role="alert">
+                                        <p class="mb-0">Sisa</p>
+                                        <h4 class="alert-heading font-14 mb-0">Rp.{{number_format($biayaspp - $data->jml)}}</h4>
+                                    </div> 
+                                @endif
+                                @if($data->dibuat_pada != null || $data->dibuat_pada = "")
+                                  <h6 class="text-success">{{date_format(date_create($data->dibuat_pada),'D, d/m/Y')}}</h6>
+                                @endif
                              </div>
                             </div>
-                            
+                            @endforeach
+
+                            @endforeach
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="nav-viii" role="tabpanel" aria-labelledby="nav-viii-tab">
+                        <div class="row">               
+                            @foreach( $bulan as $bl)
+                            @if($bl->posisi <= 6)
+                               @php
+                               $tahun = $tahunSPP+1;
+                               $spp = DB::table('tb_pembayaran')
+                               ->leftJoin('tb_siswa','tb_siswa.nis','tb_pembayaran.nis')
+                               ->leftJoin('tb_jenis_pembayaran','tb_jenis_pembayaran.id_jenis_pem','tb_pembayaran.id_jenis_pem')
+                               ->leftJoin('tb_bulan_ajaran','tb_bulan_ajaran.id_ajaran','tb_pembayaran.pembayaran_bulan')
+                               ->where('tb_pembayaran.nis',$id)
+                               ->where('tb_pembayaran.id_jenis_pem',1)
+                               ->where('tb_bulan_ajaran.id_ajaran',$bl->id_ajaran)
+                               ->where('tb_pembayaran.pembayaran_tahun',$tahun)
+                               ->select('tb_bulan_ajaran.bulan','tb_pembayaran.dibuat_pada',DB::raw('SUM(tb_pembayaran.jumlah) as jml'))
+                               ->get();
+                               @endphp
+                            @else
+                               @php
+                               $tahun = $tahunSPP+2;
+                               $spp = DB::table('tb_pembayaran')
+                               ->leftJoin('tb_siswa','tb_siswa.nis','tb_pembayaran.nis')
+                               ->leftJoin('tb_jenis_pembayaran','tb_jenis_pembayaran.id_jenis_pem','tb_pembayaran.id_jenis_pem')
+                               ->leftJoin('tb_bulan_ajaran','tb_bulan_ajaran.id_ajaran','tb_pembayaran.pembayaran_bulan')
+                               ->where('tb_pembayaran.nis',$id)
+                               ->where('tb_pembayaran.id_jenis_pem',1)
+                               ->where('tb_bulan_ajaran.id_ajaran',$bl->id_ajaran)
+                               ->where('tb_pembayaran.pembayaran_tahun',$tahun)
+                               ->select('tb_bulan_ajaran.bulan','tb_pembayaran.dibuat_pada',DB::raw('SUM(tb_pembayaran.jumlah) as jml'))
+                               ->get();
+                               @endphp
+                            @endif
+
+                            @foreach($spp as $data)
+                            <div class="col-md-3 col-sm-12">
+                             <div class="card card-body text-center">
+                                <h6>{{$bl->bulan}} | {{$tahun}}</h6>
+                                @if($data->jml == 0)
+                                    <div class="alert alert-success text-center mb-0" role="alert">
+                                        <p class="mb-0">Sisa</p>
+                                        <h4 class="alert-heading font-14 mb-0">Rp.{{number_format($biayaspp)}}</h4>
+                                    </div> 
+                                @elseif($biayaspp-$data->jml <= 0)
+                                    <span>
+                                    <img src="{{ URL::asset('assets/images/stempel-lunas.png')}}" alt="" height="60">
+                                    </span>
+                                @else
+                                    <div class="alert alert-success text-center mb-0" role="alert">
+                                        <p class="mb-0">Sisa</p>
+                                        <h4 class="alert-heading font-14 mb-0">Rp.{{number_format($biayaspp - $data->jml)}}</h4>
+                                    </div> 
+                                @endif
+                                @if($data->dibuat_pada != null || $data->dibuat_pada = "")
+                                  <h6 class="text-success">{{date_format(date_create($data->dibuat_pada),'D, d/m/Y')}}</h6>
+                                @endif
+                             </div>
+                            </div>
+                            @endforeach
+
+                            @endforeach
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="nav-ix" role="tabpanel" aria-labelledby="nav-ix-tab">
+                        <div class="row">               
+                            @foreach( $bulan as $bl)
+                            @if($bl->posisi <= 6)
+                               @php
+                               $tahun = $tahunSPP+2;
+                               $spp = DB::table('tb_pembayaran')
+                               ->leftJoin('tb_siswa','tb_siswa.nis','tb_pembayaran.nis')
+                               ->leftJoin('tb_jenis_pembayaran','tb_jenis_pembayaran.id_jenis_pem','tb_pembayaran.id_jenis_pem')
+                               ->leftJoin('tb_bulan_ajaran','tb_bulan_ajaran.id_ajaran','tb_pembayaran.pembayaran_bulan')
+                               ->where('tb_pembayaran.nis',$id)
+                               ->where('tb_pembayaran.id_jenis_pem',1)
+                               ->where('tb_bulan_ajaran.id_ajaran',$bl->id_ajaran)
+                               ->where('tb_pembayaran.pembayaran_tahun',$tahun)
+                               ->select('tb_bulan_ajaran.bulan','tb_pembayaran.dibuat_pada',DB::raw('SUM(tb_pembayaran.jumlah) as jml'))
+                               ->get();
+                               @endphp
+                            @else
+                               @php
+                               $tahun = $tahunSPP+3;
+                               $spp = DB::table('tb_pembayaran')
+                               ->leftJoin('tb_siswa','tb_siswa.nis','tb_pembayaran.nis')
+                               ->leftJoin('tb_jenis_pembayaran','tb_jenis_pembayaran.id_jenis_pem','tb_pembayaran.id_jenis_pem')
+                               ->leftJoin('tb_bulan_ajaran','tb_bulan_ajaran.id_ajaran','tb_pembayaran.pembayaran_bulan')
+                               ->where('tb_pembayaran.nis',$id)
+                               ->where('tb_pembayaran.id_jenis_pem',1)
+                               ->where('tb_bulan_ajaran.id_ajaran',$bl->id_ajaran)
+                               ->where('tb_pembayaran.pembayaran_tahun',$tahun)
+                               ->select('tb_bulan_ajaran.bulan','tb_pembayaran.dibuat_pada',DB::raw('SUM(tb_pembayaran.jumlah) as jml'))
+                               ->get();
+                               @endphp
+                            @endif
+
+                            @foreach($spp as $data)
+                            <div class="col-md-3 col-sm-12">
+                             <div class="card card-body text-center">
+                                <h6>{{$bl->bulan}} | {{$tahun}}</h6>
+                                @if($data->jml == 0)
+                                    <div class="alert alert-success text-center mb-0" role="alert">
+                                        <p class="mb-0">Sisa</p>
+                                        <h4 class="alert-heading font-14 mb-0">Rp.{{number_format($biayaspp)}}</h4>
+                                    </div> 
+                                @elseif($biayaspp-$data->jml <= 0)
+                                    <span>
+                                    <img src="{{ URL::asset('assets/images/stempel-lunas.png')}}" alt="" height="60">
+                                    </span>
+                                @else
+                                    <div class="alert alert-success text-center mb-0" role="alert">
+                                        <p class="mb-0">Sisa</p>
+                                        <h4 class="alert-heading font-14 mb-0">Rp.{{number_format($biayaspp - $data->jml)}}</h4>
+                                    </div> 
+                                @endif
+                                @if($data->dibuat_pada != null || $data->dibuat_pada = "")
+                                  <h6 class="text-success">{{date_format(date_create($data->dibuat_pada),'D, d/m/Y')}}</h6>
+                                @endif
+                             </div>
+                            </div>
+                            @endforeach
+
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+
+                       
+                           
 
                         </div>
 

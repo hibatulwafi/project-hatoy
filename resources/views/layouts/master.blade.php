@@ -14,7 +14,10 @@ rel="stylesheet"
 href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css"
 type="text/css"
 />
-<script type="text/javascript" src="{{asset('/chartjs/Chart.js')}}"></script>
+    <link rel="stylesheet" href="{{ asset('/css/dropify.css') }}">
+    <link rel="stylesheet" href="{{ asset('/css/jquery.fancybox.min.css') }}">
+
+    <script type="text/javascript" src="{{asset('/chartjs/Chart.js')}}"></script>
 
         @include('layouts.head')
   </head>

@@ -30,9 +30,9 @@
             <div class="card m-b-20">
                 <div class="card-body">
 
-                    <button class="btn btn-info">Harian</button>
-                    <button class="btn btn-success">Bulanan</button>
-                    <button class="btn btn-info">Semester</button>
+                    <a href="{{ route('laporan.harian') }}" class="btn btn-info">Harian</a>
+                    <a href="{{ route('laporan.bulanan') }}" class="btn btn-success">Bulanan</a>
+                    <a href="{{ route('laporan.semester') }}" class="btn btn-info">Semester</a>
                     <br/>
                     <br/>
            
@@ -48,27 +48,46 @@
                             </tr>
                         </thead>
                         <tbody>
+                        @php
+                        $no = 1;
+                        @endphp
+                        @foreach($bulanan as $data)
+                      
+
                             <tr>
-                               <td>1</td>
-                               <td>Januari</td>
-                               <td class="text-center">2021</td>
-                               <td class="text-right">Rp.3.250.000,-</td>
-                               <td><a class="btn btn-info btn-sm" href="" ><i class="fa fa-eye"></i></a></td>
+                               <td>{{$no++}}</td>
+                               <td>
+                                    @if($data->date == 1)
+                                    Januari
+                                    @elseif($data->date == 2)
+                                    Februari
+                                    @elseif($data->date == 3)
+                                    Maret
+                                    @elseif($data->date == 4)
+                                    April
+                                    @elseif($data->date == 5)
+                                    Mei
+                                    @elseif($data->date == 6)
+                                    Juni
+                                    @elseif($data->date == 7)
+                                    Juli
+                                    @elseif($data->date == 8)
+                                    Agustus
+                                    @elseif($data->date == 9)
+                                    September
+                                    @elseif($data->date == 10)
+                                    Oktober
+                                    @elseif($data->date == 11)
+                                    November
+                                    @elseif($data->date == 12)
+                                    Desember
+                                    @endif
+                               </td>
+                               <td class="text-center">{{date_format(date_create($data->dibuat_pada),'Y')}}</td>
+                               <td class="text-right">{{number_format($data->total)}}</td>
+                               <td><a class="btn btn-info btn-sm" href="{{route('laporan.bulanan.detail',$data->date)}}" ><i class="fa fa-eye"></i></a></td>
                             </tr>
-                            <tr>
-                               <td>2</td>
-                               <td>Februari</td>
-                               <td class="text-center">2021</td>
-                               <td class="text-right">Rp.5.550.000,-</td>
-                               <td><a class="btn btn-info btn-sm" href="" ><i class="fa fa-eye"></i></a></td>
-                            </tr>
-                            <tr>
-                               <td>3</td>
-                               <td>Maret</td>
-                               <td class="text-center">2021</td>
-                               <td class="text-right">Rp.7.750.000,-</td>
-                               <td><a class="btn btn-info btn-sm" href="" ><i class="fa fa-eye"></i></a></td>
-                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
 

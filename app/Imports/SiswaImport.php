@@ -10,13 +10,7 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 class SiswaImport implements ToModel , WithHeadingRow
 {
-    // private $rows = 0;
-    // public $limit = 12;
-    /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
+    
     public function model(array $row)
     {
         $siswa = new Siswa([

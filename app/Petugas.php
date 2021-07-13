@@ -7,11 +7,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Petugas extends Authenticatable
 {
-    protected $table ='tbpetugas'; 
-    protected $primaryKey = 'id_petugas';
+    protected $table ='tb_login'; 
+    protected $primaryKey = 'id';
     
     protected $fillable = [
-       'id_petugas', 'email', 'password','role','namalengkap'
+       'id', 'username', 'password','nama_akun','level'
     ];
     protected $hidden = [
         'password', 'remember_token',

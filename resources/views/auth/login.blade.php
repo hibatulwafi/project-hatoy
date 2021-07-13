@@ -1,55 +1,52 @@
-@extends('layouts.master-without-nav')
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/64d58efce2.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
+    <title>Login - Hatoy</title>
+    <script src="{{ asset('js/app2.js') }}" defer></script>
 
-@section('content')
-        <!-- Begin page -->
-        <div class="wrapper-page">
-
-            <div class="card">
-            <div class="card-body">
-
-<h3 class="text-center m-0">
-    <a href="/index" class="logo logo-admin"><img src="{{URL::asset('assets/images/icon-login.png')}}" style="margin-top:40px;" height="50" alt="logo"></a>
-    </h3>
-
-<div class="p-3">
-    <h4 class="text-muted font-18 m-b-5 text-center">Selamat Datang !</h4>
-    <p class="text-muted text-center">Silahkan masuk untuk melanjutkan.</p>
-
-    <form class="form-horizontal m-t-30" action="{{ route('loginpost') }}" method="POST">
-        @csrf
-        <div class="form-group">
-            <label for="username">Email</label>
-            <input type="text" class="form-control @error('username') is-invalid @enderror" name='email' id="email" placeholder="Masukan Email">
-       
-        </div>
-
-        <div class="form-group">
-            <label for="userpassword">Password</label>
-            <input type="password" class="form-control @error('password') is-invalid @enderror" name='password' id="password" placeholder="Enter password">  
-        </div>
-        
-        <div class="form-group row m-t-20">
-            <div class="col-sm-6">
-               
+  </head>
+  <body>
+    <div class="container">
+      <div class="forms-container">
+        <div class="signin-signup">
+          <form method="POST" action="{{ route('loginpost') }}" aria-label="{{ __('Login') }}">
+            <h2 class="title">Log in</h2>
+             @csrf
+            <div class="input-field">
+              <i class="fas fa-user"></i>
+              <input placeholder="Username" id="email" type="email" name="email" required autofocus/>
             </div>
-            <div class="col-sm-6 text-right">
-                <button class="btn btn-primary w-md waves-effect waves-light" type="submit">Log In</button>
+            <div class="input-field">
+              <i class="fas fa-lock"></i>
+              <input id="password" type="password" name="password" required placeholder="Password" />
             </div>
+            <input type="submit" value="Login" class="btn solid" />
+          </form>
+          
         </div>
+      </div>
 
-    </form>
-
-    @if ($message = Session::get('error'))
-    <div class="alert alert-danger alert-block">
-        <button type="button" class="close" data-dismiss="alert">×</button> 
+      <div class="panels-container">
+        <div class="panel left-panel">
+          <div class="content">
+            <h3>SMP IT HATOY</h3>
+            <p>
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis,
+              ex ratione. Aliquid!
+            </p>
+          </div>
+          <img src="{{ asset('img/log.svg') }}" class="image" alt="" />
+        </div>
+      </div>
     </div>
-    @endif
 
-</div>
-
-</div>
-            </div>
-
-        </div>
-        
-@endsection
+    <script src="app.js"></script>
+  </body>
+</html>

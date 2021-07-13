@@ -30,9 +30,9 @@
             <div class="card m-b-20">
                 <div class="card-body">
 
-                    <button class="btn btn-info">Harian</button>
-                    <button class="btn btn-info">Bulanan</button>
-                    <button class="btn btn-success">Semester</button>
+                    <a href="{{ route('laporan.harian') }}" class="btn btn-info">Harian</a>
+                    <a href="{{ route('laporan.bulanan') }}" class="btn btn-info">Bulanan</a>
+                    <a href="{{ route('laporan.semester') }}" class="btn btn-success">Semester</a>
                     <br/>
                     <br/>
            
@@ -41,34 +41,26 @@
                         <thead>
                             <tr>
                                 <th scope="col" width="5%">No</th>
-                                <th scope="col" class="text-center">Semester</th>
-                                <th scope="col" class="text-center">Tahun Ajaran</th>
+                                <th scope="col" class="text-center">Tahun</th>
                                 <th scope="col" class="text-center">Total Pemasukan</th>  
                                 <th scope="col"  width="10%">Detail</th> 
                             </tr>
                         </thead>
                         <tbody>
+                        @php
+                        $no = 1;
+                        $total = 0;
+                        @endphp
+                        @foreach($tahunan as $data)
+                      
+
                             <tr>
-                               <td>1</td>
-                               <td>1 / Ganjil</td>
-                               <td class="text-center">2020</td>
-                               <td class="text-right">Rp.56.250.000,-</td>
-                               <td><a class="btn btn-info btn-sm" href="" ><i class="fa fa-eye"></i></a></td>
+                               <td>{{$no++}}</td>
+                               <td class="text-center">{{$data->date}}</td>
+                               <td class="text-right">{{number_format($data->total)}}</td>
+                               <td><a class="btn btn-info btn-sm" href="{{route('laporan.semester.detail',$data->date)}}" ><i class="fa fa-eye"></i></a></td>
                             </tr>
-                            <tr>
-                               <td>2</td>
-                               <td>2 / Genap</td>
-                               <td class="text-center">2020</td>
-                               <td class="text-right">Rp.50.550.000,-</td>
-                               <td><a class="btn btn-info btn-sm" href="" ><i class="fa fa-eye"></i></a></td>
-                            </tr>
-                            <tr>
-                               <td>3</td>
-                               <td>1 / Ganjil</td>
-                               <td class="text-center">2021</td>
-                               <td class="text-right">Rp.30.750.000,-</td>
-                               <td><a class="btn btn-info btn-sm" href="" ><i class="fa fa-eye"></i></a></td>
-                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
 

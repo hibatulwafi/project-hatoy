@@ -211,11 +211,14 @@
                     <div class="col-12" style="margin-top:20px;">
                         <div class="row">
                         <div class="col-2">&nbsp;</div>
-                        <div class="col-4">
-                        	<a class="btn btn-danger col-12 align-right" href="{{url('/siswa/edit/'.$siswa->nis)}}">UBAH DATA</a>
+                        <div class="col-3">
+                        	<a class="btn btn-info col-12 align-right" href="{{url('/siswa/edit/'.$siswa->nis)}}">UBAH DATA</a>
                         </div>
-                        <div class="col-4">
-                        	<a class="btn btn-success col-12 align-right" href="{{url('/tabelsiswa')}}">KEMBALI</a>
+                        <div class="col-3">
+                        	<a class="btn btn-success col-12 align-right" style="" href="{{url('/tabelsiswa')}}">KEMBALI</a>
+                        </div>
+                         <div class="col-3">
+                        	<a class="btn btn-danger col-12 align-right" href="{{url('/siswa/delete/'.$siswa->nis)}}">Hapus</a>
                         </div>
                         <div class="col-2">&nbsp;</div>
                         </div>

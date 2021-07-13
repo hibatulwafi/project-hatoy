@@ -30,10 +30,10 @@
                             <label class="col-3 col-lg-2 col-form-label text-right">Siswa</label>
                             <div class="col-9 col-lg-10">
                             <select class="form-control">
-                                <option>- Pilih Siswa-</option>
-                                <option>12345 - Hibatul Wafi</option>
-                                <option>12346 - Rida Febria</option>
-
+                                <option>-Pilih Siswa-</option>
+                                @foreach($siswa as $data)
+                                <option>{{$data->nama_siswa}}</option>
+                                @endforeach()
                             </select>
                             </div>  
                         </div>

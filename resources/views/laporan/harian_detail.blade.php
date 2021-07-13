@@ -18,7 +18,8 @@
                 <h4 class="page-title float-left">Laporan</h4>
                 <ol class="breadcrumb float-right">
                     <li class="breadcrumb-item"><a href="javascript:void(0);">Laporan</a></li>
-                    <li class="breadcrumb-item active">Harian</li>
+                    <li class="breadcrumb-item"><a href="{{ route('laporan.harian') }}">Harian</a></li>
+                    <li class="breadcrumb-item active">Detail</li>
                 </ol>
             </div>
         </div>
@@ -41,9 +42,10 @@
                         <thead>
                             <tr>
                                 <th scope="col" width="5%">No</th>
+                                <th scope="col" >Nama</th>
+                                <th scope="col" >Pembayaran</th>
                                 <th scope="col" class="text-center">Tanggal</th>
-                                <th scope="col" class="text-center">Total Pemasukan</th>  
-                                <th scope="col"  width="10%">Detail</th> 
+                                <th scope="col" class="text-center">Jumlah</th>  
                             </tr>
                         </thead>
                         <tbody>
@@ -54,9 +56,10 @@
                             
                             <tr>
                                <td>{{$no++}}</td>
+                               <td>{{$data->nama_siswa}}</td>
+                               <td>{{$data->jenis_pembayaran}}</td>
                                <td>{{date_format(date_create($data->date),'D, d/m/Y')}}</td>
-                               <td class="text-right">{{number_format($data->total)}}</td>
-                               <td><a class="btn btn-info btn-sm" href="{{route('laporan.harian.detail',$data->date)}}" ><i class="fa fa-eye"></i></a></td>
+                               <td class="text-right">{{number_format($data->jumlah)}}</td>
                             </tr>
                            @endforeach
                         </tbody>

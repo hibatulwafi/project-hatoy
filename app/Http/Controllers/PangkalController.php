@@ -84,6 +84,9 @@ class PangkalController extends Controller
           'status_pembayaran' => 1,
           'dibuat_pada' => now()
       ]);
+
+            return redirect()->back();
+
     }
     
 }

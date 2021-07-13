@@ -21,8 +21,11 @@
                 <div class="card-body">
                 <center><h5>DATA SISWA</h5></center>
                 <p/>
-                <form method="post"  action="{{ url('siswa/save') }}" id="form" data-parsley-validate="" novalidate="">
+                <form method="post"  action="{{ url('siswa/save') }}" id="form" data-parsley-validate="" novalidate="" enctype="multipart/form-data">
                 {{csrf_field ()}}
+
+                   
+
                     <div class="col-12">
                         <div class="row">
                         <div class="form-group row col-6">
@@ -63,9 +66,9 @@
                             <label class="col-3 col-lg-2 col-form-label text-right">Kelas</label>
                             <div class="col-4 col-lg-5">
                                 <select name="kelas_angka" class="form-control">
-                                   <option value="7">7</option>
-                                   <option value="8">8</option>
-                                   <option value="9">9</option>
+                                   <option value="VII">7</option>
+                                   <option value="VIII">8</option>
+                                   <option value="IX">9</option>
                                 </select>                           
                             </div>
                              <div class="col-5 col-lg-5">
@@ -220,6 +223,20 @@
                         </div>
                         </div>
                     </div>
+
+                    <div class="col-12">
+                        <div class="row">
+                        <div class="form-group row col-6">
+                            <label class="col-3 col-lg-2 col-form-label text-right">Foto Siswa</label>
+                                <div class="col-9 col-lg-10">
+                                    <input type="file" class="form-control logo " name="gambar" id="gambar">
+                               </div>  
+
+                        </div>
+                        </div>
+                    </div>
+
+
                 <p/>
                 <p/>
                 <center><h5>DATA ORANGTUA</h5></center>
@@ -299,6 +316,20 @@
 @section('script')
         <!-- Parsley js -->
         <script src="{{ URL::asset('assets/plugins/parsleyjs/parsley.min.js')}}"></script>
+
+        <script>
+            $(document).ready(function () {
+                $('.logo').dropify({
+                    messages: {
+                        'default': '',
+                        'replace': 'Drag and drop or click to replace',
+                        'remove':  'Remove',
+                        'error':   'Ooops, something wrong happended.'
+                    }
+                });
+            });
+
+        </script>
 @endsection
 
 @section('script-bottom')

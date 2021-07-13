@@ -220,6 +220,18 @@
                         </div>
                         </div>
                     </div>
+
+                        <div class="col-12">
+                        <div class="row">
+                        <div class="form-group row col-6">
+                            <label class="col-3 col-lg-2 col-form-label text-right">Foto Siswa</label>
+                                <div class="col-9 col-lg-10">
+                                    <input type="file" class="form-control logo " name="gambar" id="gambar">
+                               </div>  
+
+                        </div>
+                        </div>
+                    </div>
                 <p/>
                 <p/>
                 <center><h5>DATA PINDAHAN</h5></center>
@@ -229,16 +241,16 @@
                         <div class="form-group row col-6">
                             <label class="col-3 col-lg-2 col-form-label text-right">Asal</label>
                             <div class="col-9 col-lg-10">
-                                <input name="nama_ayah" type="text" required="" class="form-control" placeholder="Asal Sekolah SMP Lama">
+                                <input name="asal_smp" type="text" required="" class="form-control" placeholder="Asal Sekolah SMP Lama">
                             </div>  
                         </div>
                           <div class="form-group row col-6">
                             <label class="col-3 col-lg-2 col-form-label text-right">Masuk</label>
                             <div class="col-4 col-lg-5">
-                                <input name="nama_ibu" type="text" required="" class="form-control" placeholder="Bulan Masuk">
+                                <input name="masuk_bulan" type="text" required="" class="form-control" placeholder="Bulan Masuk">
                             </div> 
                             <div class="col-5 col-lg-5">
-                                <input name="nama_ibu" type="text" required="" class="form-control" placeholder="Tahun Masuk">
+                                <input name="masuk_tahun" type="text" required="" class="form-control" placeholder="Tahun Masuk">
                             </div>   
                         </div>
                         </div>

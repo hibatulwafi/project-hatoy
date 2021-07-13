@@ -32,9 +32,9 @@
 
                     <div class="row" style="margin-bottom:20px;">
                         <div class="col-6">
-                        <button class="btn btn-success">Kelas 7</button>
+                      <!--   <button class="btn btn-success">Kelas 7</button>
                         <button class="btn btn-info">Kelas 8</button>
-                        <button class="btn btn-info">Kelas 9</button>
+                        <button class="btn btn-info">Kelas 9</button> -->
                         </div>
                         <div class="col-6">
                         <a href="" style="margin-left:10px;" class="btn btn-default btn-light float-right" data-toggle="modal" data-target="#importModal" title="Import File">
@@ -53,6 +53,7 @@
                             <th scope="col" width="5%">No</th>
                             <th scope="col">NIS</th>
                             <th scope="col">Nama Siswa</th>  
+                            <th scope="col">Kelas</th>  
                             <th scope="col">Gender</th>  
                             <th scope="col">No Telp</th>     
                             <th scope="col" width="10%">Aksi</th> 
@@ -67,11 +68,12 @@
                                 <td align="center">{{ $no++ }} </td>
                                 <td>{{ $data->nis }} </td>
                                 <td>{{ $data->nama_siswa }}</td>
+                                <td>{{ $data->kelas }}</td>
                                 <td>{{ $data->jk }}</td>
                                 <td>{{ $data->no_telepon }}</td>
                                 <td align="center">
                                     <a class="btn btn-info btn-sm" href="{{url('/siswa/detail/'.$data->nis)}}" ><i class="fa fa-eye"></i></a>
-                                    <a class="btn btn-success btn-sm" href="{{url('/siswa/delete/'.$data->nis)}}" ><i class="fa fa-edit"></i></a>
+                                    <a class="btn btn-success btn-sm" href="{{url('/siswa/edit/'.$data->nis)}}" ><i class="fa fa-edit"></i></a>
                                 </td>
                             </tr>
                             @endforeach
@@ -90,13 +92,13 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Import Data Produk</h5>
+                <h5 class="modal-title" id="deleteModalLabel">Import Data Siswa</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+         <form action="{{ route('siswa.import')}}" method="POST" enctype="multipart/form-data">
             <div class="modal-body">
-                <form action="{{ route('siswa.import')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                       <label for="import_produk">Import File</label>

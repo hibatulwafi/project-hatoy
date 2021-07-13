@@ -18,7 +18,8 @@
                 <h4 class="page-title float-left">Laporan</h4>
                 <ol class="breadcrumb float-right">
                     <li class="breadcrumb-item"><a href="javascript:void(0);">Laporan</a></li>
-                    <li class="breadcrumb-item active">Harian</li>
+                    <li class="breadcrumb-item"><a href="{{ route('laporan.semester') }}">Semester</a></li>
+                    <li class="breadcrumb-item active">Detail</li>
                 </ol>
             </div>
         </div>
@@ -30,35 +31,61 @@
             <div class="card m-b-20">
                 <div class="card-body">
 
-                    <a href="{{ route('laporan.harian') }}" class="btn btn-success">Harian</a>
+                    <a href="{{ route('laporan.harian') }}" class="btn btn-info">Harian</a>
                     <a href="{{ route('laporan.bulanan') }}" class="btn btn-info">Bulanan</a>
-                    <a href="{{ route('laporan.semester') }}" class="btn btn-info">Semester</a>
+                    <a href="{{ route('laporan.semester') }}" class="btn btn-success">Semester</a>
                     <br/>
                     <br/>
-           
 
                     <table id="datatable" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                             <tr>
                                 <th scope="col" width="5%">No</th>
-                                <th scope="col" class="text-center">Tanggal</th>
+                                <th scope="col" class="text-center">Bulan</th>
+                                <th scope="col" class="text-center">Tahun</th>
                                 <th scope="col" class="text-center">Total Pemasukan</th>  
-                                <th scope="col"  width="10%">Detail</th> 
+                                <th scope="col"  width="10%">Detail</th>   
                             </tr>
                         </thead>
                         <tbody>
-                            @php
-                                $no = 1;
-                            @endphp
-                            @foreach($harian as $data)
-                            
+                        @php
+                        $no = 1;
+                        @endphp
+                        @foreach($semester as $data)
                             <tr>
                                <td>{{$no++}}</td>
-                               <td>{{date_format(date_create($data->date),'D, d/m/Y')}}</td>
+                               <td>
+                                    @if($data->date == 1)
+                                    Januari
+                                    @elseif($data->date == 2)
+                                    Februari
+                                    @elseif($data->date == 3)
+                                    Maret
+                                    @elseif($data->date == 4)
+                                    April
+                                    @elseif($data->date == 5)
+                                    Mei
+                                    @elseif($data->date == 6)
+                                    Juni
+                                    @elseif($data->date == 7)
+                                    Juli
+                                    @elseif($data->date == 8)
+                                    Agustus
+                                    @elseif($data->date == 9)
+                                    September
+                                    @elseif($data->date == 10)
+                                    Oktober
+                                    @elseif($data->date == 11)
+                                    November
+                                    @elseif($data->date == 12)
+                                    Desember
+                                    @endif
+                               </td>
+                               <td class="text-center">{{date_format(date_create($data->dibuat_pada),'Y')}}</td>
                                <td class="text-right">{{number_format($data->total)}}</td>
-                               <td><a class="btn btn-info btn-sm" href="{{route('laporan.harian.detail',$data->date)}}" ><i class="fa fa-eye"></i></a></td>
+                               <td><a class="btn btn-info btn-sm" href="{{route('laporan.bulanan.detail',$data->date)}}" ><i class="fa fa-eye"></i></a></td>
                             </tr>
-                           @endforeach
+                        @endforeach
                         </tbody>
                     </table>
 

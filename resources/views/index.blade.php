@@ -13,7 +13,7 @@
                                     <h4 class="page-title">Dashboard</h4>
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item active">
-                                           Halo, Selamat datang Wafi
+                                           Halo, Selamat datang {{Auth::user()->name}}
                                         </li>
                                     </ol>
                                 </div>
@@ -22,6 +22,16 @@
                         <!-- end row -->
 
             <div class="row">
+                @if(date("m") == 6 || date("m") == 7)
+                <div class="col-xl-12 col-md-12"> 
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                  <h6> <strong>Selamat Kenaikan Kelas!! </strong> ubah status kenaikan kelas disini <a href="#"> Klik Disini</a> </h6>
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                </div>
+                @endif
 
                 <div class="col-xl-3 col-md-6">   
                     <div class="card mini-stat bg-primary">
@@ -31,9 +41,9 @@
                             </div>
                             <div class="text-white">
                                 <h6 class="text-uppercase mb-3">Jumlah <br/> Siswa</h6>
-                                <h4 class="mb-4">1,587</h4>
-                                <span class="badge badge-success"> +11 </span> <span class="ml-2">Bertambah Dari Tahun Lalu</span>
-                            </div>
+                                <h4 class="mb-4">{{number_format($totalsiswa)}}</h4>
+<!--                                 <span class="badge badge-success"> +11 </span> <span class="ml-2">Bertambah Dari Tahun Lalu</span>
+ -->                            </div>
                         </div>
                     </div>
                 </div>
@@ -46,9 +56,20 @@
                             </div>
                             <div class="text-white">
                                 <h6 class="text-uppercase mb-3">Jumlah <br/> Siswa Kelas 7</h6>
-                                <h4 class="mb-4">527</h4>
-                                <span class="badge badge-success"> +11 </span> <span class="ml-2">Bertambah Dari Tahun Lalu</span>
-                            </div>
+                                <h4 class="mb-4">
+                                    @php $totalsemua = 0; @endphp
+                                    @foreach($totalperkelas as $data)
+                                        @if(substr($data->kelas,0,-2) == 'VII')
+                                            <?php 
+                                            $total = DB::table('tb_siswa')->where('kelas',"=",$data->kelas)->count(); 
+                                            $totalsemua = $totalsemua + $total;
+                                            ?>
+                                        @endif
+                                    @endforeach
+                                    {{$totalsemua}}
+                                </h4>
+<!--                                 <span class="badge badge-success"> +11 </span> <span class="ml-2">Bertambah Dari Tahun Lalu</span>
+ -->                            </div>
                         </div>
                     </div>
                 </div>
@@ -61,9 +82,20 @@
                             </div>
                             <div class="text-white">
                                 <h6 class="text-uppercase mb-3">Jumlah <br/> Siswa Kelas 8</h6>
-                                <h4 class="mb-4">511</h4>
-                                <span class="badge badge-success"> +11 </span> <span class="ml-2">Bertambah Dari Tahun Lalu</span>
-                            </div>
+                                <h4 class="mb-4">
+                                    @php $totalsemua = 0; @endphp
+                                    @foreach($totalperkelas as $data)
+                                        @if(substr($data->kelas,0,-2) == 'VIII')
+                                            <?php 
+                                            $total = DB::table('tb_siswa')->where('kelas',"=",$data->kelas)->count(); 
+                                            $totalsemua = $totalsemua + $total;
+                                            ?>
+                                        @endif
+                                    @endforeach
+                                    {{$totalsemua}}
+                                </h4>
+<!--                                 <span class="badge badge-success"> +11 </span> <span class="ml-2">Bertambah Dari Tahun Lalu</span>
+ -->                            </div>
                         </div>
                     </div>
                 </div>
@@ -76,9 +108,20 @@
                             </div>
                             <div class="text-white">
                                 <h6 class="text-uppercase mb-3">Jumlah <br/> Siswa Kelas 9</h6>
-                                <h4 class="mb-4">549</h4>
-                                <span class="badge badge-success"> +11 </span> <span class="ml-2">Bertambah Dari Tahun Lalu</span>
-                            </div>
+                                <h4 class="mb-4">
+                                    @php $totalsemua = 0; @endphp
+                                    @foreach($totalperkelas as $data)
+                                        @if(substr($data->kelas,0,-2) == 'IX')
+                                            <?php 
+                                            $total = DB::table('tb_siswa')->where('kelas',"=",$data->kelas)->count(); 
+                                            $totalsemua = $totalsemua + $total;
+                                            ?>
+                                        @endif
+                                    @endforeach
+                                    {{$totalsemua}}
+                                </h4>
+<!--                                 <span class="badge badge-success"> +11 </span> <span class="ml-2">Bertambah Dari Tahun Lalu</span>
+ -->                            </div>
                         </div>
                     </div>
                 </div>
@@ -91,8 +134,8 @@
                             </div>
                             <div class="text-white">
                                 <h6 class="text-uppercase mb-3">Pendapatan <br/>Hari Ini</h6>
-                                <h4 class="mb-4">Rp 1.500.000,-</h4>
-                                <span class="badge badge-warning float-right"> Jum'at. 26 Mar 2021 </span>
+                                <h4 class="mb-4">Rp.{{number_format($hariini)}}</h4>
+                                <span class="badge badge-warning float-right"> {{date("D, d-m-Y")}} </span>
 
                             </div>
                         </div>
@@ -107,8 +150,8 @@
                             </div>
                             <div class="text-white">
                                 <h6 class="text-uppercase mb-3">Pendapatan <br/>Bulan Ini</h6>
-                                <h4 class="mb-4">Rp 5.520.000,-</h4>
-                                <span class="badge badge-warning float-right"> Maret 2021</span>
+                                <h4 class="mb-4">Rp.{{number_format($bulanini)}}</h4>
+                                <span class="badge badge-warning float-right"> {{date("M Y")}} </span>
 
                             </div>
                         </div>
@@ -123,8 +166,8 @@
                             </div>
                             <div class="text-white">
                                 <h6 class="text-uppercase mb-3">Pendapatan Total / Semester Sekarang</h6>
-                                <h4 class="mb-4">Rp 12.520.000,-</h4>
-                                <span class="badge badge-warning float-right"> Juli 2020 - Juni 2021 </span>
+                                <h4 class="mb-4">Rp.{{number_format($tahunan)}}</h4>
+                                <span class="badge badge-warning float-right"> {{date("Y")}} </span>
 
                             </div>
                         </div>
@@ -174,8 +217,20 @@
                             <div class="card-body">
                                 <div class="mx-auto d-block">
                                     <img class="rounded-circle mx-auto d-block" width="80" src="assets/images/users/avatar.jpg" alt="Card image cap">
-                                    <h5 class="text-sm-center mt-2 mb-1">Hibatul Wafi<br/>Accounting</h5>
-                                    <div class="location text-sm-center"><i class="ti-phone"></i> US-ACC-001 </div>
+                                    <h5 class="text-sm-center mt-2 mb-1">{{Auth::user()->name}}</h5>
+                                    <h6 class="text-sm-center mt-2 mb-1">
+                                     Role : 
+                                        @if(Auth::user()->level == 0)
+                                            Root
+                                        @elseif(Auth::user()->level == 1)
+                                            Kepala Sekolah
+                                        @elseif(Auth::user()->level == 2)
+                                            Akunting
+                                        @elseif(Auth::user()->level == 3)
+                                            Bendahara
+                                        @endif
+                                    </h6>
+                                    <div class="location text-sm-center"><i class="ti-phone"></i> {{Auth::user()->email}} </div>
                                 </div>
                             </div>
                         </div><!-- /# card -->

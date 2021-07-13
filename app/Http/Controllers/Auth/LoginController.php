@@ -17,7 +17,7 @@ class LoginController extends Controller
 
     public function username()
     {
-            return 'email';
+            return 'username';
     }
     protected function guard()
     {
@@ -27,6 +27,16 @@ class LoginController extends Controller
     public function loginform()
     {   
         return view('auth.login');
+    }
+
+    public function login(Request $req){
+        $email = $req->email;
+        $pwd   = $req->password;
+        if (Auth::attempt(['email' => $email, 'password' => $pwd])) {
+        return redirect()->route('index');
+        }else{
+            return "Maaf email atau password yang anda masukan tidak sesuai.";
+        }
     }
     public function getLogout()
     {

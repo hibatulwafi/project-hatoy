@@ -30,48 +30,147 @@
             <div class="card m-b-20">
                 <div class="card-body">
 
-                    <button class="btn btn-success">Kelas 7</button>
-                    <button class="btn btn-info">Kelas 8</button>
-                    <button class="btn btn-info">Kelas 9</button>
-                    <br/>
-                    <br/>
-           
+            <div class="row" style="margin-bottom:20px;">
+                <div class="col-6">
+              <!--   <button class="btn btn-success">Kelas 7</button>
+                <button class="btn btn-info">Kelas 8</button>
+                <button class="btn btn-info">Kelas 9</button> -->
+                </div>
+                <div class="col-6">
+                <a href="" style="margin-left:10px;" class="btn btn-default btn-light float-right" data-toggle="modal" data-target="#importModal" title="Import File">
+                    <i class="fa fa-file-excel"></i> Import
+                </a>
+                </div>
+            </div>
 
-                    <table id="datatable" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                     <thead>
-                        <tr>
-                            <th scope="col" width="5%">No</th>
-                            <th scope="col">NIS</th>
-                            <th scope="col">Nama Siswa</th>  
-                            <th scope="col">Gender</th>  
-                            <th scope="col">No Telp</th>     
-                            <th scope="col" width="10%">Aksi</th> 
-                        </tr>
-                        </thead>
-                        <tbody>
-                            @php
-                            $no=1;
-                            @endphp
-                            @foreach ($siswa ?? '' as $data)
-                            <tr>
-                                <td align="center">{{ $no++ }} </td>
-                                <td>{{ $data->nis }} </td>
-                                <td>{{ $data->nama_siswa }}</td>
-                                <td>{{ $data->jk }}</td>
-                                <td>{{ $data->no_telepon }}</td>
-                                <td align="center">
-                                    <a class="btn btn-info btn-sm" href="{{url('/spp/pembayaran/'.$data->nis)}}" ><i class="fa fa-plus"></i></a>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+        <table id="datatable" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+         <thead>
+            <tr>
+                <th scope="col" width="5%">No</th>
+                <th scope="col">NIS</th>
+                <th scope="col">Nama Siswa</th>  
+                <th scope="col">Gender</th>  
+                <th scope="col">No Telp</th>
+                <th scope="col">Sisa /Status</th>
+                <th scope="col" width="10%">Aksi</th>   
+            </tr>
+         </thead>
+        
+        <tbody>
+            <?php
+            $no=1;
+            $totaltunggakan=0;
+            foreach($siswa as $data){
+            ?>
+            <tr>
+
+            <?php
+            echo "<td>".$no++."</td>";
+            echo "<td>".$data->nis."</td>";
+            echo "<td>".$data->nama_siswa."</td>";
+            echo "<td>".$data->jk."</td>";
+            echo "<td>".$data->no_telepon."</td>";
+
+            
+            $biayaspp = DB::table('tb_detail_pembayaran')->where('tahun_ajaran',$data->tahun_masuk)->first();
+            $id=$data->nis;
+            $bulansekarang = DB::table('tb_bulan_ajaran')->where('bulan',$date)->first();
+            $tunggakan = 0;
+            $tahunmasuk = $data->tahun_masuk;
+
+            $selisih = $tahunSekarang - $data->tahun_masuk;
+
+            if($selisih >= 4){
+               $tahunSekarang = $data->tahun_masuk+ 3;
+            }             
+
+
+
+                foreach(range($data->tahun_masuk, $tahunSekarang) as $year){
+
+                if($tahunSekarang == $year){
+                foreach (range(1, $bulansekarang->posisi) as $month) {
+
+                   $qrytunggakan = DB::table('tb_pembayaran')
+                   ->where('nis', $id)
+                   ->where('id_jenis_pem',1)
+                   ->where('pembayaran_bulan',$month)
+                   ->where('pembayaran_tahun',$year)
+                   ->select(DB::raw('SUM(jumlah) as jumlah'))
+                   ->get();
+                        foreach( $qrytunggakan as $data){   
+                                $tunggakan1 = $biayaspp->jumlah - $data->jumlah; 
+                                $tunggakan = $tunggakan+$tunggakan1;
+                        }
+                    }
+                }else{
+                foreach (range(1, 12) as $month) {
+                   $qrytunggakan = DB::table('tb_pembayaran')
+                   ->where('nis', $id)
+                   ->where('id_jenis_pem',1)
+                   ->where('pembayaran_bulan',$month)
+                   ->where('pembayaran_tahun',$year)
+                   ->select(DB::raw('SUM(jumlah) as jumlah'))
+                   ->get();
+                            foreach( $qrytunggakan as $data){   
+                                $tunggakan1 = $biayaspp->jumlah - $data->jumlah; 
+                                $tunggakan = $tunggakan+$tunggakan1;
+                            }
+                        }
+                    }
+                }
+                   
+
+            $totaltunggakan += $tunggakan;
+            echo "<td> Rp.".number_format($tunggakan)."</td>";
+
+            ?>
+             <td align="center">
+                <a class="btn btn-info btn-sm" href="{{url('/spp/pembayaran/'.$id)}}" ><i class="fa fa-plus"></i></a>
+            </td>
+            </tr> 
+            <?php } ?>
+        </tbody>
+        </table>
+
+        <p> {{number_format($totaltunggakan)}}</p>
 
                 </div>
             </div>
         </div> <!-- end col -->
     </div> <!-- end row -->
  </div> <!-- container-fluid -->
+
+<!-- Modal Import File-->
+<div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Import Data SPP</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+         <form action="{{ route('spp.import')}}" method="POST" enctype="multipart/form-data">
+            <div class="modal-body">
+                    @csrf
+                    <div class="form-group">
+                      <label for="import_produk">Import File</label>
+                      <input type="file" class="form-control-file" name="import_spp" id="import_spp" placeholder="" aria-describedby="fileHelpId" required>
+                      <small id="fileHelpId" class="form-text text-muted">Tipe file : xls, xlsx</small>
+                      <small id="fileHelpId" class="form-text text-muted">Pastikan file upload sesuai format. <br> <a href="{{ url('template/pembayaranspp_template.xlsx') }}">Download contoh format file xlsx <i class="fas fa-download ml-1   "></i></a></small>
+                    </div>
+                
+            </div>
+            <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('script')

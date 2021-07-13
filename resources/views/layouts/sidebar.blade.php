@@ -12,13 +12,14 @@
                                     <i class="mdi mdi-view-dashboard"></i><span> Dashboard </span>
                                 </a>
                             </li>
+
+                            @if(Auth::user()->level == 2 || Auth::user()->level == 3 || Auth::user()->level ==  0)
                             <li>
                                 <a href="#" class="waves-effect"><i class="mdi mdi-human-child"></i><span>Siswa <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span></a>
                                 <ul class="submenu">
                                     <li><a href="{{ route('tabelsiswa') }}" class="waves-effect"><i class="mdi mdi-fan"></i><span> Data Siswa </span></a></li>
                                     <li><a href="{{ route('inputsiswa') }}" class="waves-effect"><i class="mdi mdi-fan"></i><span> Input Siswa </span></a></li>
                                     <li><a href="{{ route('pindahsiswa') }}" class="waves-effect"><i class="mdi mdi-fan"></i><span> Siswa Pindah</span></a></li>
-                                    <!--<li><a href="{{ route('luas') }}" class="waves-effect"><i class="mdi mdi-image-filter-vintage"></i><span> Luas Areal </span></a></li>-->
                                 </ul>
                             </li>
                           
@@ -26,7 +27,7 @@
                                 <a href="#" class="waves-effect"><i class="mdi mdi-home-modern"></i><span>Kelas<span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span></a>
                                 <ul class="submenu">
                                     <li><a href="{{ route('tabelkelas') }}" class="waves-effect"><i class="mdi mdi-fan"></i><span> Data Kelas </span></a></li>
-                                    <li><a href="{{ route('pindahkelas') }}" class="waves-effect"><i class="mdi mdi-fan"></i><span> Pindah Kelas </span></a></li>
+                                    <li><a href="{{ route('kenaikankelas') }}" class="waves-effect"><i class="mdi mdi-fan"></i><span> Kenaikan Kelas </span></a></li>
 
                                 </ul>
                             </li>
@@ -40,6 +41,7 @@
 
                                 </ul>
                             </li>
+                            @endif
 
                             <li>
                                 <a href="#" class="waves-effect"><i class="mdi mdi-chart-areaspline"></i><span>Laporan<span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span></a>
@@ -49,13 +51,14 @@
                                      <li><a href="{{ route('laporan.semester') }}" class="waves-effect"><i class="mdi mdi-fan"></i><span> Semester </span></a></li>
                                 </ul>
                             </li>
+                            @if(Auth::user()->level == 2 || Auth::user()->level ==  0)
 
                             <li>
                                 <a href="#" class="waves-effect"><i class="mdi mdi-settings"></i><span>Setting<span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span></a>
                                 <ul class="submenu">
                                      <li><a href="{{ route('setting.tahun') }}" class="waves-effect"><i class="mdi mdi-fan"></i><span>Tahun Ajar</span></a></li>
                                      <li><a href="{{ route('setting.pembayaran') }}" class="waves-effect"><i class="mdi mdi-fan"></i><span>Bayaran</span></a></li>
-                                     <li><a href="{{ route('laporan.harian') }}" class="waves-effect"><i class="mdi mdi-fan"></i><span>Lainnya</span></a></li>
+                                     <li><a href="#" class="waves-effect"><i class="mdi mdi-fan"></i><span>Lainnya</span></a></li>
 
                                 </ul>
                             </li>
@@ -63,6 +66,8 @@
                             <li>
                                 <a href="{{ route('petugas') }}" class="waves-effect"><i class="mdi mdi-account"></i><span> Petugas </span></a>
                             </li>
+
+                            @endif
                         </ul>
                     </div>
                     <!-- Sidebar -->
