@@ -23,6 +23,48 @@ class LaporanController extends Controller
         return view('laporan.harian',$data);
     }
 
+    public function pendapatan(Request $request)
+    {
+      $start = $request->start;
+      $end = $request->end;
+      $pendapatan = DB::table('tb_pembayaran')
+      ->select(DB::raw('DATE(tanggal_bayar) as date'), DB::raw('sum(jumlah) as total'))
+      ->groupBy('date')
+      ->orderBy('date','DESC')
+      ->get();
+        $data = array(
+        'pendapatan' => $pendapatan,
+        'start' => $start,
+        'end' => $end,
+
+      );
+              return view('laporan.pendapatan',$data);
+
+    }
+
+
+    public function filter(Request $request)
+    {
+                       
+      $start = date_create($request->start);
+      $end = date_create($request->end);
+      $pendapatan = DB::table('tb_pembayaran')
+      ->select(DB::raw('DATE(tanggal_bayar) as date'), DB::raw('sum(jumlah) as total'))
+      ->groupBy('date')  
+      ->where('tanggal_bayar', '>=', $start)
+      ->where('tanggal_bayar', '<=', $end)
+      ->orderBy('date','DESC')
+      ->get();
+        $data = array(
+        'pendapatan' => $pendapatan,
+        'start' => $start,
+        'end' => $end,
+
+      );
+      return view('laporan.pendapatan',$data);
+
+    }
+
     public function harian_detail($id)
     {
       $harian = DB::table('tb_pembayaran')

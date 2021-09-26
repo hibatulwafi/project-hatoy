@@ -32,9 +32,11 @@
 
             <div class="row" style="margin-bottom:20px;">
                 <div class="col-6">
-              <!--   <button class="btn btn-success">Kelas 7</button>
-                <button class="btn btn-info">Kelas 8</button>
-                <button class="btn btn-info">Kelas 9</button> -->
+                    @if($filter == 'true')
+                    <a href="{{route('spp.filter')}}" class="btn btn-info text-white">Data Alumni</a>
+                    @elseif($filter == 'false')
+                    <a href="{{route('spp')}}" class="btn btn-info text-white">Data Siswa</a>
+                    @endif
                 </div>
                 <div class="col-6">
                 <a href="" style="margin-left:10px;" class="btn btn-default btn-light float-right" data-toggle="modal" data-target="#importModal" title="Import File">
@@ -48,7 +50,8 @@
             <tr>
                 <th scope="col" width="5%">No</th>
                 <th scope="col">NIS</th>
-                <th scope="col">Nama Siswa</th>  
+                <th scope="col">Nama Siswa</th>
+                <th scope="col">Kelas</th>
                 <th scope="col">Gender</th>  
                 <th scope="col">No Telp</th>
                 <th scope="col">Sisa /Status</th>
@@ -68,10 +71,12 @@
             echo "<td>".$no++."</td>";
             echo "<td>".$data->nis."</td>";
             echo "<td>".$data->nama_siswa."</td>";
+            echo "<td>".$data->kelas."</td>";
+
             echo "<td>".$data->jk."</td>";
             echo "<td>".$data->no_telepon."</td>";
 
-            
+        
             $biayaspp = DB::table('tb_detail_pembayaran')->where('tahun_ajaran',$data->tahun_masuk)->first();
             $id=$data->nis;
             $bulansekarang = DB::table('tb_bulan_ajaran')->where('bulan',$date)->first();
@@ -96,10 +101,10 @@
                    ->where('id_jenis_pem',1)
                    ->where('pembayaran_bulan',$month)
                    ->where('pembayaran_tahun',$year)
-                   ->select(DB::raw('SUM(jumlah) as jumlah'))
+                   ->select(DB::raw('SUM(jumlah) as jumlah'),DB::raw('SUM(diskon) as diskon'))
                    ->get();
                         foreach( $qrytunggakan as $data){   
-                                $tunggakan1 = $biayaspp->jumlah - $data->jumlah; 
+                                $tunggakan1 = $biayaspp->jumlah - $data->jumlah - $data->diskon; 
                                 $tunggakan = $tunggakan+$tunggakan1;
                         }
                     }
@@ -110,10 +115,10 @@
                    ->where('id_jenis_pem',1)
                    ->where('pembayaran_bulan',$month)
                    ->where('pembayaran_tahun',$year)
-                   ->select(DB::raw('SUM(jumlah) as jumlah'))
+                   ->select(DB::raw('SUM(jumlah) as jumlah'),DB::raw('SUM(diskon) as diskon'))
                    ->get();
                             foreach( $qrytunggakan as $data){   
-                                $tunggakan1 = $biayaspp->jumlah - $data->jumlah; 
+                                $tunggakan1 = $biayaspp->jumlah - $data->jumlah - $data->diskon; 
                                 $tunggakan = $tunggakan+$tunggakan1;
                             }
                         }
@@ -122,7 +127,7 @@
                    
 
             $totaltunggakan += $tunggakan;
-            echo "<td> Rp.".number_format($tunggakan)."</td>";
+            echo "<td class='text-right'> Rp.".number_format($tunggakan)."</td>";
 
             ?>
              <td align="center">
@@ -131,9 +136,14 @@
             </tr> 
             <?php } ?>
         </tbody>
+        <tfoot> 
+                <tr><td></td>
+                    <td colspan="5" class="text-right">Jumlah</td>
+                    <td class="text-right">Rp.{{number_format($totaltunggakan)}}</td>
+                    <td></td>
+                </tr>
+        </tfoot>
         </table>
-
-        <p> {{number_format($totaltunggakan)}}</p>
 
                 </div>
             </div>

@@ -12,11 +12,44 @@ use Illuminate\Support\Str;
 
 class SiswaController extends Controller
 {
-    public function index()
+    public function index($id ='')
     {
+
+        if ($id == ''){
+    $siswa = DB::table('tb_siswa')->where('kelas','NOT LIKE','%Alumni%')->get();
+    $filter = 'true' ;
+    }else{
+    $siswa = DB::table('tb_siswa')->where('kelas','LIKE','%Alumni%')->get();
+    $filter = 'false' ;
+    }
+
        $siswa = DB::table('tb_siswa')->where('status_siswa','Aktif')->get();
         $data=array(
             'siswa' =>$siswa,
+            'filter' => $filter,
+        );
+        return view('siswa.index',$data);
+    }
+
+    public function filter($id ='')
+    {
+
+        if ($id == ''){
+    $siswa = DB::table('tb_siswa')->where('kelas','NOT LIKE','%Alumni%')->get();
+    $filter = 'true' ;
+    }else{
+    $siswa = DB::table('tb_siswa')->where('kelas','LIKE','%Alumni%')->get();
+    $filter = 'false' ;
+    }
+
+        $siswa = DB::table('tb_siswa')->where('status_siswa','Aktif')
+        ->where('kelas','like','%'.$id.'%')
+        ->where('status_siswa','Aktif')
+        ->get();
+
+        $data=array(
+            'siswa' =>$siswa,
+            'filter' => $filter,
         );
         return view('siswa.index',$data);
     }

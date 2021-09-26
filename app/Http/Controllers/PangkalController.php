@@ -10,18 +10,31 @@ class PangkalController extends Controller
 {
     public function index()
     {
-       $siswa = DB::table('tb_siswa')->get();
+       $siswa = DB::table('tb_siswa')->where('kelas','NOT LIKE','%Alumni%')->get();
        $masuk = DB::table('tb_pembayaran')
                      ->where('id_jenis_pem',3)
                      ->sum('jumlah');
-       
         $data=array(
             'siswa' =>$siswa,
             'jumlah_siswa'=>count($siswa),
             'masuk' => $masuk,
+            'filter' =>'true'
         );
+        return view('pangkal.index',$data);
+    }
 
-
+    public function alumni()
+    {
+       $siswa = DB::table('tb_siswa')->where('kelas','LIKE','%Alumni%')->get();
+       $masuk = DB::table('tb_pembayaran')
+                     ->where('id_jenis_pem',3)
+                     ->sum('jumlah');
+        $data=array(
+            'siswa' =>$siswa,
+            'jumlah_siswa'=>count($siswa),
+            'masuk' => $masuk,
+            'filter' =>'false',
+        );
         return view('pangkal.index',$data);
     }
 

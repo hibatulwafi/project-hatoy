@@ -8,9 +8,9 @@
                                 <div class="page-title-box">
                                     <h4 class="page-title">Form Edit</h4>
                                     <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="javascript:void(0);">Qbun</a></li>
-                                        <li class="breadcrumb-item"><a href="{{ route('petugas') }}">Forms</a></li>
-                                        <li class="breadcrumb-item active">Form Edit</li>
+                                        <li class="breadcrumb-item"><a href="javascript:void(0);">Petugas</a></li>
+                                        <li class="breadcrumb-item"><a href="{{ route('petugas') }}">Data</a></li>
+                                        <li class="breadcrumb-item active">Edit</li>
                                     </ol>
                                 </div>
                             </div>
@@ -26,19 +26,19 @@
                                     <div class="form-group row">
                                             <label class="col-3 col-lg-2 col-form-label text-right">Id Petugas</label>
                                             <div class="col-5 col-lg-10">
-                                                <input value="@if(count($result) >0 ) {{$result['master'][0]->id_petugas}} @endif" name="id_petugas" type="text" readonly class="form-control">
+                                                <input value="@if(count($result) >0 ) {{$result['master'][0]->id}} @endif" name="id" type="text" readonly class="form-control">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-3 col-lg-2 col-form-label text-right">Email</label>
                                             <div class="col-9 col-lg-10">
-                                                <input value="@if(count($result) >0 ) {{$result['master'][0]->email}} @endif" name="email" type="text" required="" class="form-control">
+                                                <input value="@if(count($result) >0 ){{$result['master'][0]->email}} @endif" name="email" type="text" required="" class="form-control">
                                             </div>  
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-3 col-lg-2 col-form-label text-right">Nama Lengkap</label>
                                             <div class="col-9 col-lg-10">
-                                                <input value="@if(count($result) >0 ) {{$result['master'][0]->namalengkap}} @endif" name="namalengkap" type="text" required="" class="form-control">
+                                                <input value="@if(count($result) >0){{$result['master'][0]->name}} @endif" name="name" type="text" required="" class="form-control">
                                             </div>  
                                         </div>
                                         <div class="form-group row">
@@ -47,7 +47,8 @@
                                             
                                             </label>
                                             <div class="col-9 col-lg-10">
-                                                <input value="@if($result['master'][0]->role==1)Admin Web @elseif($result['master'][0]->role==0)Super Admin @endif"name="role" type="text" readonly class="form-control">
+                                                <input value="@if($result['master'][0]->level==1)Kepala Sekolah @elseif($result['master'][0]->level==2)Akuntan @elseif($result['master'][0]->level==3)Bendahara @elseif($result['master'][0]->level==0)Root @endif"
+                                                name="level" type="text" readonly class="form-control">
                                             </div>
                                         </div>
                                         <div class="row pt-2 pt-sm-5 mt-1">

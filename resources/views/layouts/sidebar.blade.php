@@ -33,32 +33,43 @@
                             </li>
                          
                             <li>
-                                <a href="#" class="waves-effect"><i class="mdi mdi-cash-usd"></i><span>Input Pembayaran<span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span></a>
+                                <a href="#" class="waves-effect"><i class="mdi mdi-cash-usd"></i><span>Input Transaksi<span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span></a>
                                 <ul class="submenu">
                                     <li><a href="{{ route('spp') }}" class="waves-effect"><i class="mdi mdi-fan"></i><span> SPP </span></a></li>
-                                    <li><a href="{{ route('pangkal') }}" class="waves-effect"><i class="mdi mdi-fan"></i><span> Pangkal </span></a></li>
                                     <li><a href="{{ route('kegiatan') }}" class="waves-effect"><i class="mdi mdi-fan"></i><span> Kegiatan </span></a></li>
-
+                                    <li><a href="{{ route('pangkal') }}" class="waves-effect"><i class="mdi mdi-fan"></i><span> Pangkal </span></a></li>
+                                    <li><a href="{{ route('biaya') }}" class="waves-effect"><i class="mdi mdi-fan"></i><span> Biaya </span></a></li>
+                                    <li><a href="{{ route('aset') }}" class="waves-effect"><i class="mdi mdi-fan"></i><span> Aset </span></a></li>
                                 </ul>
                             </li>
                             @endif
+                            @if(Auth::user()->level == 2  || Auth::user()->level ==  0)
 
                             <li>
                                 <a href="#" class="waves-effect"><i class="mdi mdi-chart-areaspline"></i><span>Laporan<span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span></a>
                                 <ul class="submenu">
-                                     <li><a href="{{ route('laporan.harian') }}" class="waves-effect"><i class="mdi mdi-fan"></i><span> Harian </span></a></li>
+                                     <!-- <li><a href="{{ route('laporan.harian') }}" class="waves-effect"><i class="mdi mdi-fan"></i><span> Harian </span></a></li>
                                      <li><a href="{{ route('laporan.bulanan') }}" class="waves-effect"><i class="mdi mdi-fan"></i><span> Bulanan </span></a></li>
-                                     <li><a href="{{ route('laporan.semester') }}" class="waves-effect"><i class="mdi mdi-fan"></i><span> Semester </span></a></li>
+                                     <li><a href="{{ route('laporan.semester') }}" class="waves-effect"><i class="mdi mdi-fan"></i><span> Semester </span></a></li> -->
+                                     <li><a href="{{ route('laporan.pendapatan') }}" class="waves-effect"><i class="mdi mdi-fan"></i><span> Pendapatan </span></a></li>
+                                     <li><a href="{{ route('laporan.biaya') }}" class="waves-effect"><i class="mdi mdi-fan"></i><span> Biaya </span></a></li>
+                                     <li><a href="{{ route('laporan.aset') }}" class="waves-effect"><i class="mdi mdi-fan"></i><span> Aset </span></a></li>
+                                     <li><a href="{{ route('laporan.bukubesar') }}" class="waves-effect"><i class="mdi mdi-fan"></i><span> Buku Besar </span></a></li>
+                                     <li><a href="{{ route('laporan.cashflow') }}" class="waves-effect"><i class="mdi mdi-fan"></i><span> Cashflow </span></a></li>
+                                    <li><a href="{{ route('laporan.labarugi') }}" class="waves-effect"><i class="mdi mdi-fan"></i><span> Laba Rugi </span></a></li>
+                                 <!--    <li><a href="{{ route('laporan.ekuitas') }}" class="waves-effect"><i class="mdi mdi-fan"></i><span> Ekuitas </span></a></li> -->
+                                    <li><a href="{{ route('laporan.neraca') }}" class="waves-effect"><i class="mdi mdi-fan"></i><span> Neraca </span></a></li>
                                 </ul>
                             </li>
+                            @endif
                             @if(Auth::user()->level == 2 || Auth::user()->level ==  0)
 
                             <li>
                                 <a href="#" class="waves-effect"><i class="mdi mdi-settings"></i><span>Setting<span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span></a>
                                 <ul class="submenu">
-                                     <li><a href="{{ route('setting.tahun') }}" class="waves-effect"><i class="mdi mdi-fan"></i><span>Tahun Ajar</span></a></li>
-                                     <li><a href="{{ route('setting.pembayaran') }}" class="waves-effect"><i class="mdi mdi-fan"></i><span>Bayaran</span></a></li>
-                                     <li><a href="#" class="waves-effect"><i class="mdi mdi-fan"></i><span>Lainnya</span></a></li>
+                                     <li><a href="{{ route('setting.tahun') }}" class="waves-effect"><i class="mdi mdi-fan"></i><span>Master Tahun Ajar</span></a></li>
+                                     <li><a href="{{ route('setting.pembayaran') }}" class="waves-effect"><i class="mdi mdi-fan"></i><span>Master Bayaran</span></a></li>
+                                     <li><a href="{{ route('setting.biaya') }}" class="waves-effect"><i class="mdi mdi-fan"></i><span>Master Biaya</span></a></li>
 
                                 </ul>
                             </li>

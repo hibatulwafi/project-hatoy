@@ -22,7 +22,7 @@
                         <!-- end row -->
 
             <div class="row">
-                @if(date("m") == 6 || date("m") == 7)
+                @if(date("m") == 6)
                 <div class="col-xl-12 col-md-12"> 
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                   <h6> <strong>Selamat Kenaikan Kelas!! </strong> ubah status kenaikan kelas disini <a href="#"> Klik Disini</a> </h6>
@@ -33,7 +33,7 @@
                 </div>
                 @endif
 
-                <div class="col-xl-3 col-md-6">   
+                <div class="col-xl-4 col-md-6">   
                     <div class="card mini-stat bg-primary">
                         <div class="card-body mini-stat-img">
                             <div class="mini-stat-icon">
@@ -48,14 +48,14 @@
                     </div>
                 </div>
 
-                <div class="col-xl-3 col-md-6">   
+                <div class="col-xl-2 col-md-6">   
                     <div class="card mini-stat bg-warning">
                         <div class="card-body mini-stat-img">
                             <div class="mini-stat-icon">
                                 <i class="mdi mdi-numeric-7-box float-right"></i>
                             </div>
                             <div class="text-white">
-                                <h6 class="text-uppercase mb-3">Jumlah <br/> Siswa Kelas 7</h6>
+                                <h6 class="text-uppercase mb-3">Siswa Kelas 7</h6>
                                 <h4 class="mb-4">
                                     @php $totalsemua = 0; @endphp
                                     @foreach($totalperkelas as $data)
@@ -74,14 +74,14 @@
                     </div>
                 </div>
 
-                <div class="col-xl-3 col-md-6">   
+                <div class="col-xl-2 col-md-6">   
                     <div class="card mini-stat bg-warning">
                         <div class="card-body mini-stat-img">
                             <div class="mini-stat-icon">
                                 <i class="mdi mdi-numeric-8-box float-right"></i>
                             </div>
                             <div class="text-white">
-                                <h6 class="text-uppercase mb-3">Jumlah <br/> Siswa Kelas 8</h6>
+                                <h6 class="text-uppercase mb-3">Siswa Kelas 8</h6>
                                 <h4 class="mb-4">
                                     @php $totalsemua = 0; @endphp
                                     @foreach($totalperkelas as $data)
@@ -100,14 +100,14 @@
                     </div>
                 </div>
 
-                <div class="col-xl-3 col-md-6">   
+                <div class="col-xl-2 col-md-6">   
                     <div class="card mini-stat bg-warning">
                         <div class="card-body mini-stat-img">
                             <div class="mini-stat-icon">
                                 <i class="mdi mdi-numeric-9-box float-right"></i>
                             </div>
                             <div class="text-white">
-                                <h6 class="text-uppercase mb-3">Jumlah <br/> Siswa Kelas 9</h6>
+                                <h6 class="text-uppercase mb-3"> Siswa Kelas 9</h6>
                                 <h4 class="mb-4">
                                     @php $totalsemua = 0; @endphp
                                     @foreach($totalperkelas as $data)
@@ -119,6 +119,25 @@
                                         @endif
                                     @endforeach
                                     {{$totalsemua}}
+                                </h4>
+<!--                                 <span class="badge badge-success"> +11 </span> <span class="ml-2">Bertambah Dari Tahun Lalu</span>
+ -->                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-2 col-md-6">   
+                    <div class="card mini-stat bg-warning">
+                        <div class="card-body mini-stat-img">
+                            <div class="mini-stat-icon">
+                                <i class="fas fa-user-graduate float-right"></i>
+                            </div>
+                            <div class="text-white">
+                                <h6 class="text-uppercase mb-3">Jumlah <br/>Alumni</h6>
+                                <h4 class="mb-4">
+                                    <?php $total = DB::table('tb_siswa')->where('kelas','LIKE','%Alumni%')->count(); ?>
+                                            
+                                    {{$total}}
                                 </h4>
 <!--                                 <span class="badge badge-success"> +11 </span> <span class="ml-2">Bertambah Dari Tahun Lalu</span>
  -->                            </div>
@@ -159,7 +178,7 @@
                 </div>
 
                 <div class="col-xl-4 col-md-12">   
-                    <div class="card mini-stat bg-success">
+                    <div class="card mini-stat bg-info">
                         <div class="card-body mini-stat-img">
                             <div class="mini-stat-icon">
                                 <i class="mdi mdi-calculator float-right"></i>
@@ -167,14 +186,150 @@
                             <div class="text-white">
                                 <h6 class="text-uppercase mb-3">Pendapatan Total / Semester Sekarang</h6>
                                 <h4 class="mb-4">Rp.{{number_format($tahunan)}}</h4>
-                                <span class="badge badge-warning float-right"> {{date("Y")}} </span>
+                                <span class="badge badge-warning float-right"> {{$semester}} </span>
 
                             </div>
                         </div>
                     </div>
                 </div>
 
-                 <div class="col-xl-6 col-lg-12">
+                  <div class="col-xl-4 col-md-12">   
+                    <div class="card mini-stat bg-success">
+                        <div class="card-body mini-stat-img">
+                            <div class="mini-stat-icon">
+                                <i class="mdi mdi-currency-usd float-right"></i>
+                            </div>
+                            <div class="text-white">
+                                <h6 class="text-uppercase mb-3">Pengeluaran <br/>Hari Ini</h6>
+                                <h4 class="mb-4">Rp.{{number_format($pengeluaranharian)}}</h4>
+                                <span class="badge badge-warning float-right"> {{date("D, d-m-Y")}} </span>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                 <div class="col-xl-4 col-md-12">   
+                    <div class="card mini-stat bg-success">
+                        <div class="card-body mini-stat-img">
+                            <div class="mini-stat-icon">
+                                <i class="mdi mdi-calendar-check float-right"></i>
+                            </div>
+                            <div class="text-white">
+                                <h6 class="text-uppercase mb-3">Pengeluaran <br/>Bulan Ini</h6>
+                                <h4 class="mb-4">Rp.{{number_format($pengeluaranbulanan)}}</h4>
+                                <span class="badge badge-warning float-right"> {{date("M Y")}} </span>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-4 col-md-12">   
+                    <div class="card mini-stat bg-success">
+                        <div class="card-body mini-stat-img">
+                            <div class="mini-stat-icon">
+                                <i class="mdi mdi-calculator float-right"></i>
+                            </div>
+                            <div class="text-white">
+                                <h6 class="text-uppercase mb-3">Pengeluaran Tahun Sekarang</h6>
+                                <h4 class="mb-4">Rp.{{number_format($pengeluarantahunan)}}</h4>
+                                <span class="badge badge-warning float-right"> {{date('Y')}} </span>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-xl-4 col-md-12">   
+                    <div class="card mini-stat bg-danger">
+                        <div class="card-body mini-stat-img">
+                            <div class="mini-stat-icon">
+                                <i class="mdi mdi-currency-usd float-right"></i>
+                            </div>
+                            <div class="text-white">
+                                <h6 class="text-uppercase mb-3">Tunggakan SPP</h6>
+                                <h4 class="mb-4">Rp.{{number_format($tunggakanspp)}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-4 col-md-12">   
+                    <div class="card mini-stat bg-danger">
+                        <div class="card-body mini-stat-img">
+                            <div class="mini-stat-icon">
+                                <i class="mdi mdi-currency-usd float-right"></i>
+                            </div>
+                            <div class="text-white">
+                                <h6 class="text-uppercase mb-3">Tunggakan Kegiatan</h6>
+                                <h4 class="mb-4">Rp.{{number_format($tunggakankegiatan)}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                 <div class="col-xl-4 col-md-12">   
+                    <div class="card mini-stat bg-danger">
+                        <div class="card-body mini-stat-img">
+                            <div class="mini-stat-icon">
+                                <i class="mdi mdi-currency-usd float-right"></i>
+                            </div>
+                            <div class="text-white">
+                                <h6 class="text-uppercase mb-3">Tunggakan Pangkal</h6>
+                                <h4 class="mb-4">Rp.{{number_format($tunggakanpangkal)}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-6 col-lg-12">
+                    <div class="card mini-stat bg-secondary">
+                        <div class="card-body mini-stat-img">
+                            <div class="mini-stat-icon">
+                                <i class="mdi mdi-cash-multiple float-right"></i>
+                            </div>
+                            <div class="text-white">
+                                <h6 class="text-uppercase mb-3">Uang Kas Sekolah</h6>
+                                <h4 class="mb-4">Rp.{{number_format($kas)}}</h4>
+                                <span class="badge badge-info float-right"> {{date("D, d-m-Y")}} </span>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+               
+                    <div class="col-xl-6 col-md-12">
+                        <div class="card">
+                            <div class="card-header" style="background-color: #343a40;">
+                                <strong class="card-title mb-3" style="color:white">User Profil</strong>
+                            </div>
+                            <div class="card-body">
+                                <div class="mx-auto d-block">
+                                    <img class="rounded-circle mx-auto d-block" width="80" src="assets/images/users/avatar.jpg" alt="Card image cap">
+                                    <h5 class="text-sm-center mt-2 mb-1">{{Auth::user()->name}}</h5>
+                                    <h6 class="text-sm-center mt-2 mb-1">
+                                     Role : 
+                                        @if(Auth::user()->level == 0)
+                                            Root
+                                        @elseif(Auth::user()->level == 1)
+                                            Kepala Sekolah
+                                        @elseif(Auth::user()->level == 2)
+                                            Akunting
+                                        @elseif(Auth::user()->level == 3)
+                                            Bendahara
+                                        @endif
+                                    </h6>
+                                    <div class="location text-sm-center"><i class="ti-phone"></i> {{Auth::user()->email}} </div>
+                                </div>
+                            </div>
+                        </div><!-- /# card -->
+                    </div><!-- /# column -->
+
+
+                      <!-- <div class="col-xl-6 col-lg-12">
                         <div class="card m-b-20">
                             <div class="card-body">
                                 <h4 class="mt-0 header-title mb-4">Aktifitas Terbaru</h4>
@@ -206,35 +361,9 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
 
-                    <div class="col-xl-6 col-md-12">
-                        <div class="card">
-                            <div class="card-header" style="background-color: #343a40;">
-                                <strong class="card-title mb-3" style="color:white">User Profil</strong>
-                            </div>
-                            <div class="card-body">
-                                <div class="mx-auto d-block">
-                                    <img class="rounded-circle mx-auto d-block" width="80" src="assets/images/users/avatar.jpg" alt="Card image cap">
-                                    <h5 class="text-sm-center mt-2 mb-1">{{Auth::user()->name}}</h5>
-                                    <h6 class="text-sm-center mt-2 mb-1">
-                                     Role : 
-                                        @if(Auth::user()->level == 0)
-                                            Root
-                                        @elseif(Auth::user()->level == 1)
-                                            Kepala Sekolah
-                                        @elseif(Auth::user()->level == 2)
-                                            Akunting
-                                        @elseif(Auth::user()->level == 3)
-                                            Bendahara
-                                        @endif
-                                    </h6>
-                                    <div class="location text-sm-center"><i class="ti-phone"></i> {{Auth::user()->email}} </div>
-                                </div>
-                            </div>
-                        </div><!-- /# card -->
-                    </div><!-- /# column -->
                             <!-- end row -->
             
                             <!-- <div class="row">

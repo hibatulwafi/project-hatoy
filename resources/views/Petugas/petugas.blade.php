@@ -16,13 +16,13 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="page-title-box">
-                                    <h4 class="page-title">Data Perusahaan</h4>
+                                    <h4 class="page-title">Data Petugas</h4>
                                     <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="javascript:void(0);">Qbun</a></li>
+                                        <li class="breadcrumb-item"><a href="javascript:void(0);">Petugas</a></li>
                                         <li class="breadcrumb-item active">Data Petugas</li>
                                     </ol>
                                     <div>
-                                        <a href="{{ url('petugas/tambah') }}" class="btn btn-sm btn-primary">Tambah Petugas</a>
+                                        <!-- <a href="{{ url('petugas/tambah') }}" class="btn btn-sm btn-primary">Tambah Petugas</a> -->
                                     </div>
                                     </div>
                                 </div>
@@ -34,36 +34,43 @@
                             <div class="col-12">
                                 <div class="card m-b-20">
                                     <div class="card-body">
-
-                                        
                                         <table id="datatable" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                             <thead>
                                             <tr>
                                                 <th scope="col">No</th>
-                                                <th scope="col">Nama Lengkap</th>
                                                 <th scope="col">Email</th>
+                                                <th scope="col">Name</th>
                                                 <th scope="col">Role</th>
                                                 <th scope="col">Aksi</th>
                                             </tr>
                                             </thead>
 
-
                                             <tbody>
-                                            @php
-                                        $no = 1;
-                                        @endphp
-                                            @foreach ($petugas ?? '' as $datapetugas)
+                                @php
+                                $no = 1;
+                                @endphp
+
+                                @foreach ($petugas ?? '' as $datapetugas)
                                     <tr>
                                     <td>{{ $no++ }}</td>
-                                    <td>{{ $datapetugas->namalengkap }}</td>
-                                        <td>{{ $datapetugas->email }}</td>
-                                        <td>{{ $datapetugas->role }}</td>
-                                    <td>
-                                    <a class="btn btn-danger btn-link btn-sm" href="{{url('/petugas/delete/'.$datapetugas->id_petugas)}}"> <i class="fa fa-trash"></i>
+                                    <td>{{ $datapetugas->email }}</td>
+                                    <td>{{ $datapetugas->name }}</td>
+                                    <td>@if($datapetugas->level == 1)
+                                            Kepala Sekolah
+                                        @elseif($datapetugas->level == 2)
+                                            Akuntan
+                                        @elseif($datapetugas->level == 3)
+                                            Bendahara
+                                        @elseif($datapetugas->level == 0)
+                                            Root
+                                        @endif
+                                    </td>
+                                    <td class="text-center">
+                                   <!--  <a class="btn btn-danger btn-link btn-sm" href="{{url('/petugas/delete/'.$datapetugas->id)}}"> <i class="fa fa-trash"></i>
+                                    </a> -->
+                                    <a class="btn btn-info btn-sm" href="{{url('/petugas/edit/'.$datapetugas->id)}}" ><i class="fas fa-user-edit"></i>
                                     </a>
-                                    <a class="btn btn-warning btn-link btn-sm" href="{{url('/petugas/edit/'.$datapetugas->id_petugas)}}" ><i class="fas fa-user-edit"></i>
-                                    </a>
-                                    <a class="btn btn-warning btn-link btn-sm" href="{{ route('editpass') }}" > <i class="far fa-edit"></i>
+                                    <a class="btn btn-warning btn-sm" href="{{ route('editpass') }}" > <i class="fa fa-key"></i>
                                     </a>
                                     </td>
                                     </tr>

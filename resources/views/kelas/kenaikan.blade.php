@@ -31,7 +31,7 @@
 		</div>
 
 		  <div class="col-xl-6 col-md-6">   
-                <a href="{{route('updatekelas')}}">   
+                <a href="{{route('updatekelas')}}" onclick="return confirm('Apakah yakin?')">   
                 <div class="card mini-stat bg-primary">
                     <div class="card-body mini-stat-img">
                         <div class="mini-stat-icon">

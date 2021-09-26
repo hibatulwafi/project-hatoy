@@ -10,7 +10,7 @@ class PetugasController extends Controller
     public function index()
     {
 
-        $petugas= DB::table('tbpetugas')->get ();
+        $petugas= DB::table('tb_login')->get ();
         $datapetugas = array(
 
             'judul' =>'Data Petugas',
@@ -21,7 +21,7 @@ class PetugasController extends Controller
 
     public function tambah()
     {
-        $petugas= DB::table('tbpetugas')->get ();
+        $petugas= DB::table('tb_login')->get ();
         $datapetugas = array(
 
             'judul' =>'Data Petugas',
@@ -31,11 +31,11 @@ class PetugasController extends Controller
     }
 
     function save(Request $rq){
-        $qry= DB::table('tbpetugas')->insert([
-            'namalengkap' => $rq->namalengkap,
+        $qry= DB::table('tb_login')->insert([
+            'name' => $rq->namalengkap,
             'email' => $rq->email,
             'password' => $rq->password,
-            'role' => $rq->role
+            'level' => $rq->role
 
         ]);
         $pesan="Data Berhasil Disimpan";
@@ -49,38 +49,39 @@ class PetugasController extends Controller
 
     function edit($id) {
         $result = array();
-        $mm = DB::table('tbpetugas')
-            ->where('id_petugas',$id)
+        $mm = DB::table('tb_login')
+            ->where('id',$id)
             ->get();
 
         $result['master'] = $mm;
         $data=array(
         'judul' => 'Data Petugas'
         );
-            return view('Petugas.edit',$data)->with('result',$result);
+
+        return view('Petugas.edit',$data)->with('result',$result);
     }
 
     function update (Request $rq) {
-        $qry= DB::table ('tbpetugas')-> where('id_petugas',$rq->id_petugas)
+        $qry= DB::table ('tb_login')-> where('id',$rq->id)
             ->update ([
             'email' => $rq->email,
-            'password' =>  Hash::make($rq->password_new), 
-            'role' => $rq->role
+            'name' => $rq->name
         ]);
-            $pesan="Data Berhasil Diedit";
         if ($qry) {
+            session()->flash('success','Berhasil Update Petugas');
             return redirect()->route('petugas');
         }else{
-            echo "ERROR";
+            session()->flash('error','Terjadi Kesalahan');
+            return redirect()->route('petugas');
         }
     }
     function delete($id){
-        $qry=DB::table ('tbpetugas') -> where('id_petugas',$id) ->delete();
+        $qry=DB::table ('tb_login') -> where('id',$id) ->delete();
         $pesan="Data Berhasil dihapus";
         if ($qry) {
             return redirect()->route('petugas');
         }else{
-            // echo "GAGAL";
+            session()->flash('error','Terjadi Kesalahan');
             return redirect()->route('petugas');
         }
     }

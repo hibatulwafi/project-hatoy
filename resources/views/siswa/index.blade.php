@@ -32,9 +32,12 @@
 
                     <div class="row" style="margin-bottom:20px;">
                         <div class="col-6">
-                      <!--   <button class="btn btn-success">Kelas 7</button>
-                        <button class="btn btn-info">Kelas 8</button>
-                        <button class="btn btn-info">Kelas 9</button> -->
+                             @if($filter == 'true')
+                            <a href="{{route('tabelsiswa.filter',['Alumni'])}}" class="btn btn-info text-white">Data Alumni</a>
+                            @elseif($filter == 'false')
+                            <a href="{{route('tabelsiswa')}}" class="btn btn-info text-white">Data Siswa</a>
+                            @endif  
+
                         </div>
                         <div class="col-6">
                         <a href="" style="margin-left:10px;" class="btn btn-default btn-light float-right" data-toggle="modal" data-target="#importModal" title="Import File">

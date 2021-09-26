@@ -8,9 +8,9 @@
                                 <div class="page-title-box">
                                     <h4 class="page-title">Form Edit</h4>
                                     <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="javascript:void(0);">Qbun</a></li>
-                                        <li class="breadcrumb-item"><a href="{{ route('petugas') }}">Forms</a></li>
-                                        <li class="breadcrumb-item active">Form Edit</li>
+                                        <li class="breadcrumb-item"><a href="javascript:void(0);">Petugas</a></li>
+                                        <li class="breadcrumb-item"><a href="{{ route('petugas') }}">Data</a></li>
+                                        <li class="breadcrumb-item active">Edit Password</li>
                                     </ol>
                                 </div>
                             </div>

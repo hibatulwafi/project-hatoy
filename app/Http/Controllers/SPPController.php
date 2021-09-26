@@ -9,10 +9,11 @@ use Carbon\Carbon;
 use App\Imports\SPPImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Str;
+use Auth;
 
 class SPPController extends Controller
 {
-    public function index()
+    public function index($id ='')
     { 
 /*setlocale(LC_ALL, 'id_ID.UTF8', 'id_ID.UTF-8', 'id_ID.8859-1', 'id_ID', 'IND.UTF8', 'IND.UTF-8', 'IND.8859-1', 'IND', 'Indonesian.UTF8', 'Indonesian.UTF-8', 'Indonesian.8859-1', 'Indonesian', 'Indonesia', 'id', 'ID', 'en_US.UTF8', 'en_US.UTF-8', 'en_US.8859-1', 'en_US', 'American', 'ENG', 'English');
 $date = strftime( "%A, %d %B %Y %H:%M", time());
@@ -23,9 +24,15 @@ echo "Saat ini: ".$date;*/
 
     $date = strftime("%B", time());
     $bulan = DB::table('tb_bulan_ajaran')->where('bulan',$date)->first();
-    $siswa = DB::table('tb_siswa')->get();
 
-     $tahunSekarang =  date("Y");
+    if ($id == ''){
+    $siswa = DB::table('tb_siswa')->where('kelas','NOT LIKE','%Alumni%')->get();
+    $filter = 'true' ;
+    }else{
+    $siswa = DB::table('tb_siswa')->where('kelas','LIKE','%Alumni%')->get();
+    $filter = 'false' ;
+    }
+    $tahunSekarang =  date("Y");
 
    
     // uji coba
@@ -87,9 +94,31 @@ echo "Saat ini: ".$date;*/
             'bulanini' => $bulan->bulan,
             'date' => $date,
             'tahunSekarang' => $tahunSekarang,
-            'bulan' => $bulan
+            'bulan' => $bulan,
+            'filter' => $filter,
         );
         return view('spp.index',$data);
+    }
+
+    public function alumni(){ 
+    setlocale(LC_ALL, 'id_ID.UTF8', 'id_ID.UTF-8', 'id_ID.8859-1', 'id_ID', 'IND.UTF8', 'IND.UTF-8', 'IND.8859-1', 'IND', 'Indonesian.UTF8',
+    'Indonesian.UTF-8', 'Indonesian.8859-1', 'Indonesian', 'Indonesia', 'id', 'ID', 'en_US.UTF8', 'en_US.UTF-8', 'en_US.8859-1', 'en_US',
+    'American', 'ENG', 'English');
+
+    $date = strftime("%B", time());
+    $bulan = DB::table('tb_bulan_ajaran')->where('bulan',$date)->first();
+    $siswa = DB::table('tb_siswa')->where('kelas','LIKE','%Alumni%')->get();
+    $filter = 'false' ;
+    $tahunSekarang =  date("Y");
+        $data=array(
+            'siswa' =>$siswa,
+            'bulanini' => $bulan->bulan,
+            'date' => $date,
+            'tahunSekarang' => $tahunSekarang,
+            'bulan' => $bulan,
+            'filter' => $filter,
+        );
+        return view('spp.alumni',$data);
     }
 
     public function pembayaran($id)
@@ -120,7 +149,7 @@ echo "Saat ini: ".$date;*/
         $namaBulan = array("Juli","Agustus","September","Oktober","November","Desember","Januari","Februari","Maret","April","Mei","Juni");
         $noBulan = 1;
         $tunggakan = 0;
-        for($index=0; $index < $bulansekarang->id_ajaran-1; $index++){
+      /*  for($cmd=0; $index < $bulansekarang->id_ajaran-1; $index++){
            $qrytunggakan = DB::table('tb_pembayaran')
            ->leftJoin('tb_siswa','tb_siswa.nis','tb_pembayaran.nis')
            ->leftJoin('tb_jenis_pembayaran','tb_jenis_pembayaran.id_jenis_pem','tb_pembayaran.id_jenis_pem')
@@ -136,7 +165,7 @@ echo "Saat ini: ".$date;*/
                     $tunggakan = $tunggakan+$tunggakan1;
               }
             $noBulan++;
-        }
+        }*/
 
 
        $data=array(
@@ -159,7 +188,9 @@ echo "Saat ini: ".$date;*/
       $bulan = $request->bulan;
       $keterangan = $request->keterangan;
       $nis = $request->nis;
-
+      $diskon = $request->diskon;
+      $method = $request->method;
+      $tanggal_bayar = $request->tanggal_bayar;
       $siswa = DB::table('tb_siswa')->where('nis',$nis)
                      ->select('tahun_masuk')->first();
       
@@ -171,6 +202,9 @@ echo "Saat ini: ".$date;*/
           'jumlah' =>$jumlah,
           'keterangan' => $keterangan,
           'status_pembayaran' => 1,
+          'diskon' => $diskon,
+          'method' => $method,
+          'tanggal_bayar' => $tanggal_bayar, 
           'dibuat_pada' => now()
       ]);
 
@@ -191,4 +225,18 @@ echo "Saat ini: ".$date;*/
         echo $pesan;
         //return redirect(route('spp'));
     }
+
+    public function hapus($id='')
+    {
+        $hapus = DB::table('tb_pembayaran')->where('id_pembayaran',$id)->delete();
+
+        if($hapus){
+            return redirect()->back();
+        }else{
+            echo 'Gagal Hapus';
+        }
+
+    }
+
+    
 }

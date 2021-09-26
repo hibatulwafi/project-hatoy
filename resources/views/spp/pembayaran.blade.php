@@ -35,11 +35,11 @@
 
                 	<div class="col-12">
                         <div class="row">
-                        <div class="form-group row col-4">
-                            <img class="col-12" src="{{ asset('storage/fotosiswa/'.$siswa->foto_siswa) }}" >
+                        <div class="form-group row  col-lg-4 col-md-4 col-sm-12">
+                            <img class="col-12" src="{{ asset('storage/fotosiswa/'.$siswa->foto_siswa) }}">
                         </div>
 
-                        <div class="form-group row col-8">
+                        <div class="form-group row  col-lg-8 col-md-8 col-sm-12">
                            <table class="table table-striped dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
 		                        <tbody>
 		                            <tr>
@@ -67,11 +67,16 @@
 		                                <td align="center" width="10px">:</td>
 		                                <td>{{$siswa->jk}}</td>
 		                            </tr>
-		                            <tr>
-		                                <td>Agama</td>
-		                                <td align="center" width="10px">:</td>
-		                                <td>{{$siswa->agama}}</td>
-		                            </tr>
+                                    <tr>
+                                        <td>Agama</td>
+                                        <td align="center" width="10px">:</td>
+                                        <td>{{$siswa->agama}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tahun Masuk</td>
+                                        <td align="center" width="10px">:</td>
+                                        <td>{{$siswa->tahun_masuk}}</td>
+                                    </tr>
 		                        </tbody>
                     		</table>  
                         </div>
@@ -98,7 +103,7 @@
 
 		         
                         <div class="row">
-                        <div class="form-group row col-6">
+                        <div class="form-group row col-md-6 col-sm-12">
                             <label class="col-3 col-lg-2 col-form-label text-right">Bulan</label>
                             <div class="col-9 col-lg-10">
                                 <input name="nis" type="hidden" value="{{$siswa->nis}}" required="" class="form-control" placeholder="">
@@ -109,12 +114,15 @@
                             	</select>
                             </div>  
                         </div>
-                        <div class="form-group row col-6">
+                        <div class="form-group row col-md-6 col-sm-12">
                             <label class="col-3 col-lg-2 col-form-label text-right">Tahun</label>
                             <div class="col-9 col-lg-10">
                             	<select name="tahun" class="form-control">
                             	    @foreach ($tahun ?? '' as $data)
-                            		<option value="{{ $data->tahun_ajaran }}">{{ $data->tahun_ajaran }}</option>
+                            		<option value="{{ $data->tahun_ajaran }}" 
+                                        @if($data->tahun_ajaran == date("Y")) selected="" @endif)>
+                                        {{ $data->tahun_ajaran }}
+                                    </option>
                             		@endforeach
                             	</select>
                             </div>    
@@ -124,16 +132,37 @@
 
                     <div class="col-12">
                         <div class="row">
-                        <div class="form-group row col-6">
+                        <div class="form-group row col-md-6 col-sm-12">
                             <label class="col-3 col-lg-2 col-form-label text-right">Jml</label>
                             <div class="col-9 col-lg-10">
                                 <input name="jumlah" type="text" required="" value="500000" class="form-control" placeholder="Jumlah Bayar">
                             </div>  
                         </div>
-                        <div class="form-group row col-6">
+                        <div class="form-group row col-md-6 col-sm-12">
+                            <label class="col-3 col-lg-2 col-form-label text-right">Tgl Bayar</label>
+                            <div class="col-9 col-lg-10">
+                                <input name="tanggal_bayar" type="date" required="" value="<?php echo date('Y-m-d'); ?>" class="form-control" placeholder="Keterangan">
+                            </div>  
+                        </div>
+                        <div class="form-group row col-md-6 col-sm-12">
+                            <label class="col-3 col-lg-2 col-form-label text-right">Disc</label>
+                            <div class="col-9 col-lg-10">
+                                <input name="diskon" type="text" required="" class="form-control" placeholder="Diskon">
+                            </div>  
+                        </div>
+                        <div class="form-group row col-md-6 col-sm-12">
+                            <label class="col-3 col-lg-2 col-form-label text-right">Metod</label>
+                            <div class="col-9 col-lg-10">
+                               <select name="method" class="form-control">
+                                    <option value="Tunai">Tunai</option>
+                                    <option value="Transfer">Transfer</option>
+                                </select>
+                            </div>  
+                        </div>
+                        <div class="form-group row col-md-6 col-sm-12">
                             <label class="col-3 col-lg-2 col-form-label text-right">Ket</label>
                             <div class="col-9 col-lg-10">
-                                <input name="keterangan" type="text" required="" value="Pembayaran SPP" class="form-control" placeholder="Keterangan">
+                                <input name="keterangan" type="text" required="" value="Pembayaran SPP" class="form-control" placeholder="Keterangan : e.g. Pembayaran SPP">
                             </div>  
                         </div>
                         </div>
@@ -143,7 +172,7 @@
                         <div class="row">
                         <div class="col-4">&nbsp;</div>
                         <div class="col-4">
-                             <button type="submit" class="btn btn-success col-12 align-right">SIMPAN DATA</button>
+                             <button type="submit" onclick="return confirm('Apakah data yang dimasukan sudah benar?')" class="btn btn-success col-12 align-right">SIMPAN DATA</button>
                         </div>
                         <div class="col-4">&nbsp;</div>
                         </div>
@@ -175,15 +204,18 @@
 		                <center><h5>RIWAYAT PEMBAYARAN</h5></center>
 		                <p/>
 
-            			<table id="datatable" class="table table-striped table-bordered" >
+            			<table id="example" class="table table-striped table-bordered" >
                          	<thead>
 		                        <tr>
 		                            <th width="5%">No</th>
 		                            <th>Tanggal Bayar</th>
 		                            <th>Bulan</th>  
 		                            <th>Tahun</th>  
-		                            <th>Jumlah</th>  
-		                            <th>Keterangan</th>     
+                                    <th>Jumlah</th> 
+                                    <th>Diskon</th>  
+                                    <th>Method</th>  
+		                            <th>Keterangan</th>
+                                    <th>Akasi</th>
 		                        </tr>
 		                    </thead>
 		                    <tbody>
@@ -200,8 +232,13 @@
                                         </td>
 		                                <td>{{$data->bulan}}</td>
 		                                <td>{{$data->pembayaran_tahun}}</td>
-		                                <td>Rp.{{number_format($data->jumlah)}}</td>
-		                                <td>{{$data->keterangan}}</td>
+                                        <td>Rp.{{number_format($data->jumlah)}}</td>
+                                        <td>Rp.{{number_format($data->diskon)}}</td>
+		                                <td>{{$data->method}}</td>
+                                        <td>{{$data->keterangan}}</td>
+                                        <td align="center">
+                                            <a class="btn btn-danger btn-sm" onclick="return confirm('Apakah kamu yakin ingin menghapus transaksi ini?')" href="{{url('/spp/hapus/'.$data->id_pembayaran)}}" ><i class="fa fa-trash"></i></a>
+                                        </td>
 		                            </tr>                            
                                 @endforeach
 		                    </tbody>
@@ -246,7 +283,9 @@
                                ->where('tb_pembayaran.id_jenis_pem',1)
                                ->where('tb_bulan_ajaran.id_ajaran',$bl->id_ajaran)
                                ->where('tb_pembayaran.pembayaran_tahun',$tahun)
-                               ->select('tb_bulan_ajaran.bulan','tb_pembayaran.dibuat_pada',DB::raw('SUM(tb_pembayaran.jumlah) as jml'))
+                               ->select('tb_bulan_ajaran.bulan','tb_pembayaran.dibuat_pada',
+                               DB::raw('SUM(tb_pembayaran.jumlah) as jml'),
+                               DB::raw('SUM(tb_pembayaran.diskon) as diskon'))
                                ->get();
                                @endphp
                             @else
@@ -260,7 +299,9 @@
                                ->where('tb_pembayaran.id_jenis_pem',1)
                                ->where('tb_bulan_ajaran.id_ajaran',$bl->id_ajaran)
                                ->where('tb_pembayaran.pembayaran_tahun',$tahun)
-                               ->select('tb_bulan_ajaran.bulan','tb_pembayaran.dibuat_pada',DB::raw('SUM(tb_pembayaran.jumlah) as jml'))
+                               ->select('tb_bulan_ajaran.bulan','tb_pembayaran.dibuat_pada',
+                               DB::raw('SUM(tb_pembayaran.jumlah) as jml'),
+                               DB::raw('SUM(tb_pembayaran.diskon) as diskon'))
                                ->get();
                                @endphp
                             @endif
@@ -274,14 +315,14 @@
                                         <p class="mb-0">Sisa</p>
                                         <h4 class="alert-heading font-14 mb-0">Rp.{{number_format($biayaspp)}}</h4>
                                     </div> 
-                                @elseif($biayaspp-$data->jml <= 0)
+                                @elseif($biayaspp-$data->jml-$data->diskon <= 0)
                                     <span>
                                     <img src="{{ URL::asset('assets/images/stempel-lunas.png')}}" alt="" height="60">
                                     </span>
                                 @else
                                     <div class="alert alert-success text-center mb-0" role="alert">
                                         <p class="mb-0">Sisa</p>
-                                        <h4 class="alert-heading font-14 mb-0">Rp.{{number_format($biayaspp - $data->jml)}}</h4>
+                                        <h4 class="alert-heading font-14 mb-0">Rp.{{number_format($biayaspp - $data->jml - $data->diskon)}}</h4>
                                     </div> 
                                 @endif
                                 @if($data->dibuat_pada != null || $data->dibuat_pada = "")
@@ -308,7 +349,10 @@
                                ->where('tb_pembayaran.id_jenis_pem',1)
                                ->where('tb_bulan_ajaran.id_ajaran',$bl->id_ajaran)
                                ->where('tb_pembayaran.pembayaran_tahun',$tahun)
-                               ->select('tb_bulan_ajaran.bulan','tb_pembayaran.dibuat_pada',DB::raw('SUM(tb_pembayaran.jumlah) as jml'))
+                               ->select('tb_bulan_ajaran.bulan',
+                               'tb_pembayaran.dibuat_pada',
+                               DB::raw('SUM(tb_pembayaran.jumlah) as jml'),
+                               DB::raw('SUM(tb_pembayaran.diskon) as diskon'))
                                ->get();
                                @endphp
                             @else
@@ -322,7 +366,8 @@
                                ->where('tb_pembayaran.id_jenis_pem',1)
                                ->where('tb_bulan_ajaran.id_ajaran',$bl->id_ajaran)
                                ->where('tb_pembayaran.pembayaran_tahun',$tahun)
-                               ->select('tb_bulan_ajaran.bulan','tb_pembayaran.dibuat_pada',DB::raw('SUM(tb_pembayaran.jumlah) as jml'))
+                               ->select('tb_bulan_ajaran.bulan','tb_pembayaran.dibuat_pada',DB::raw('SUM(tb_pembayaran.jumlah) as jml'),
+                               DB::raw('SUM(tb_pembayaran.diskon) as diskon'))
                                ->get();
                                @endphp
                             @endif
@@ -336,14 +381,14 @@
                                         <p class="mb-0">Sisa</p>
                                         <h4 class="alert-heading font-14 mb-0">Rp.{{number_format($biayaspp)}}</h4>
                                     </div> 
-                                @elseif($biayaspp-$data->jml <= 0)
+                                @elseif($biayaspp-$data->jml-$data->diskon <= 0)
                                     <span>
                                     <img src="{{ URL::asset('assets/images/stempel-lunas.png')}}" alt="" height="60">
                                     </span>
                                 @else
                                     <div class="alert alert-success text-center mb-0" role="alert">
                                         <p class="mb-0">Sisa</p>
-                                        <h4 class="alert-heading font-14 mb-0">Rp.{{number_format($biayaspp - $data->jml)}}</h4>
+                                        <h4 class="alert-heading font-14 mb-0">Rp.{{number_format($biayaspp - $data->jml - $data->diskon)}}</h4>
                                     </div> 
                                 @endif
                                 @if($data->dibuat_pada != null || $data->dibuat_pada = "")
@@ -370,7 +415,8 @@
                                ->where('tb_pembayaran.id_jenis_pem',1)
                                ->where('tb_bulan_ajaran.id_ajaran',$bl->id_ajaran)
                                ->where('tb_pembayaran.pembayaran_tahun',$tahun)
-                               ->select('tb_bulan_ajaran.bulan','tb_pembayaran.dibuat_pada',DB::raw('SUM(tb_pembayaran.jumlah) as jml'))
+                               ->select('tb_bulan_ajaran.bulan','tb_pembayaran.dibuat_pada',DB::raw('SUM(tb_pembayaran.jumlah) as jml'),
+                               DB::raw('SUM(tb_pembayaran.diskon) as diskon'))
                                ->get();
                                @endphp
                             @else
@@ -384,7 +430,8 @@
                                ->where('tb_pembayaran.id_jenis_pem',1)
                                ->where('tb_bulan_ajaran.id_ajaran',$bl->id_ajaran)
                                ->where('tb_pembayaran.pembayaran_tahun',$tahun)
-                               ->select('tb_bulan_ajaran.bulan','tb_pembayaran.dibuat_pada',DB::raw('SUM(tb_pembayaran.jumlah) as jml'))
+                               ->select('tb_bulan_ajaran.bulan','tb_pembayaran.dibuat_pada',DB::raw('SUM(tb_pembayaran.jumlah) as jml'),
+                               DB::raw('SUM(tb_pembayaran.diskon) as diskon'))
                                ->get();
                                @endphp
                             @endif
@@ -398,14 +445,14 @@
                                         <p class="mb-0">Sisa</p>
                                         <h4 class="alert-heading font-14 mb-0">Rp.{{number_format($biayaspp)}}</h4>
                                     </div> 
-                                @elseif($biayaspp-$data->jml <= 0)
+                                @elseif($biayaspp-$data->jml-$data->diskon <= 0)
                                     <span>
                                     <img src="{{ URL::asset('assets/images/stempel-lunas.png')}}" alt="" height="60">
                                     </span>
                                 @else
                                     <div class="alert alert-success text-center mb-0" role="alert">
                                         <p class="mb-0">Sisa</p>
-                                        <h4 class="alert-heading font-14 mb-0">Rp.{{number_format($biayaspp - $data->jml)}}</h4>
+                                        <h4 class="alert-heading font-14 mb-0">Rp.{{number_format($biayaspp - $data->jml - $data->diskon)}}</h4>
                                     </div> 
                                 @endif
                                 @if($data->dibuat_pada != null || $data->dibuat_pada = "")
@@ -454,9 +501,14 @@
         <script src="{{ URL::asset('assets/plugins/datatables/buttons.print.min.js')}}"></script>
         <script src="{{ URL::asset('assets/plugins/datatables/buttons.colVis.min.js')}}"></script>
         <!-- Responsive examples -->
-        <script src="{{ URL::asset('assets/plugins/datatables/dataTables.responsive.min.js')}}"></script>
         <script src="{{ URL::asset('assets/plugins/datatables/responsive.bootstrap4.min.js')}}"></script>
 
         <!-- Datatable init js -->
         <script src="{{ URL::asset('assets/pages/datatables.init.js')}}"></script>
+        <script type="text/javascript">
+        $(document).ready(function() {
+            $('#example').DataTable();
+
+        } );
+        </script>
 @endsection

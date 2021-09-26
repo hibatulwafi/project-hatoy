@@ -171,4 +171,76 @@ class SettingController extends Controller
 
 
     }
+
+    public function biaya(){
+       $qry = DB::table('tb_master_biaya')
+       ->orderBy('id_master_biaya','DESC')
+       ->get();
+
+        $data=array(
+            'qry' =>$qry,
+        );
+        return view('setting.biaya',$data);
+    }
+
+    public function biaya_add(Request $request){
+        $kategori_operasional = $request->kategori_operasional;
+        $biaya = $request->biaya;
+
+        $cek  =  $qry = DB::table('tb_master_biaya')
+        ->where('nama_biaya',$biaya)
+        ->get();
+
+        if (count($cek) > 0) {
+            echo "Data Sudah Ada";
+        } else {
+            $insert= DB::table('tb_master_biaya')->insert([
+            'nama_biaya' => $biaya,
+            'kategori_operasional' => $kategori_operasional,
+            'dibuat_pada' => now()
+            ]);
+
+            if ($insert) {
+                $pesan="Data Berhasil Disimpan";
+                return redirect()->route('setting.biaya');
+            }else{
+                echo "Gagal";
+            }    
+        }
+
+        
+    }
+
+      public function biaya_edit(Request $request){
+        $id_master_biaya = $request->id_master_biaya;
+        $kategori_operasional = $request->kategori_operasional;
+        $biaya = $request->biaya;
+
+        $update= DB::table('tb_master_biaya')
+        ->where('id_master_biaya',$id_master_biaya)
+        ->update([
+            'nama_biaya' => $biaya,
+            'kategori_operasional' => $kategori_operasional,
+            'diupdate_pada' => now()
+        ]);
+
+        if ($update) {
+            $pesan="Data Berhasil Disimpan";
+            return redirect()->route('setting.biaya');
+        }else{
+            echo "Gagal";
+        }
+
+
+    }
+
+
+      function delete($id){
+
+        $delete= DB::table('tb_master_biaya')->where('id_master_biaya',$id)->delete();
+        if ($delete) {
+            session()->flash('error','Sukses Hapus data!');
+            return redirect()->route('setting.biaya');
+        }
+    }
 }

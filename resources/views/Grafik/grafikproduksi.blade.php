@@ -156,7 +156,7 @@
 		var myChart = new Chart(ctx, {
 			type: 'bar',
 			data: {
-				labels: [@foreach($sa as $p){{$p->tahun_pr.","}}@endforeach],
+				labels: [@foreach($sa as p$p){{$p->tahun_pr.","}}@endforeach],
 				datasets: [{
 					label: 'Sakura ',
 					data: [@foreach($sa as $p){{$p->jml_produksi.","}}@endforeach],

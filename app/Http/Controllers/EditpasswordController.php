@@ -10,9 +10,9 @@ class EditpasswordController extends Controller
 {
     public function edit()
     {   
-        $id_petugas = Auth::guard('login')->user()->id_petugas;
+        $id = Auth::user()->id;
         $data=array(
-            'id_petugas' =>  $id_petugas
+            'id' =>  $id
         );
          return view('Petugas.edit_password',$data);
     }
@@ -23,8 +23,8 @@ public function editpost(Request $request)
     $repassword_new = $request->repassword_new;
 
     //cek email
-    $data = DB::table('tbpetugas')
-        ->where('email', '=', Auth::guard('login')->user()->username)
+    $data = DB::table('tb_login')
+        ->where('email', '=', Auth::user()->username)
         ->first();
 
     if ($data){
@@ -33,41 +33,40 @@ public function editpost(Request $request)
 
         if ($password_new != $repassword_new){
             session()->flash('success','Re Password Tidak Sama');
-            return redirect('/edit');
+            return redirect('/petugas/edit_password');
         }else{
            
-            $editqry= DB::table('tbpetugas')->where('email', Auth::guard('login')->user()->username)
+            $editqry= DB::table('tb_login')->where('email', Auth::user()->username)
             ->update ([
                     'password' =>  Hash::make($password_new), 
-                    'Log' => now()
                  ]);
     
             if ($editqry) {
                  session()->flash('success','Berhasil Update Password, Silahkan login kembali');
                  return redirect('/petugas');
             }else{
-                 session()->flash('success','Yaahh gagal update Password');
-                 return redirect('/edit');
+                 session()->flash('error','Yaahh gagal update Password');
+                 return redirect('/petugas/edit_password');
             }
 
         }
         
       
     }else{
-       session()->flash('success','Password Lama Tidak Sama');
-       return redirect('/editpassword');
+       session()->flash('error','Password Lama Tidak Sama');
+       return redirect('/petugas/edit_password');
     }
 }else{
-       session()->flash('success','Email Tidak Sama');
-       return redirect('/editpassword');
+       session()->flash('error','Email Tidak Sama');
+       return redirect('/petugas/edit_password');
 }
 
 }
 
 function update (Request $rq) {
-    $id_petugas = Auth::guard('login')->user()->id_petugas;
+    $id = Auth::user()->id;
 
-    $qry= DB::table ('tbpetugas')-> where('id_petugas',$id_petugas)
+    $qry= DB::table ('tb_login')-> where('id',$id)
         ->update ([
         'password' =>  Hash::make($rq->password_new)
     ]);

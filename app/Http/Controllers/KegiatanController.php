@@ -9,11 +9,53 @@ use Illuminate\Support\Facades\File;
 
 class KegiatanController extends Controller
 {
-    public function index()
+    public function index($id ='')
     {
-       $siswa = DB::table('tb_siswa')->get();
+    setlocale(LC_ALL, 'id_ID.UTF8', 'id_ID.UTF-8', 'id_ID.8859-1', 'id_ID', 'IND.UTF8', 'IND.UTF-8', 'IND.8859-1', 'IND', 'Indonesian.UTF8',
+    'Indonesian.UTF-8', 'Indonesian.8859-1', 'Indonesian', 'Indonesia', 'id', 'ID', 'en_US.UTF8', 'en_US.UTF-8', 'en_US.8859-1', 'en_US',
+    'American', 'ENG', 'English');
+
+    $date = strftime("%B", time());
+    $bulan = DB::table('tb_bulan_ajaran')->where('bulan',$date)->first();
+
+    if ($id == ''){
+    $siswa = DB::table('tb_siswa')->where('kelas','NOT LIKE','%Alumni%')->get();
+    $filter = 'true' ;
+    }else{
+    $siswa = DB::table('tb_siswa')->where('kelas','LIKE','%Alumni%')->get();
+    $filter = 'false' ;
+    }
+    $tahunSekarang =  date("Y");
+
+    $data=array(
+        'siswa' =>$siswa,
+        'bulanini' => $bulan->bulan,
+        'date' => $date,
+        'tahunSekarang' => $tahunSekarang,
+        'bulan' => $bulan,
+        'filter' => $filter,
+    );
+
+        return view('kegiatan.index',$data);
+    }
+
+    public function alumni(){ 
+    setlocale(LC_ALL, 'id_ID.UTF8', 'id_ID.UTF-8', 'id_ID.8859-1', 'id_ID', 'IND.UTF8', 'IND.UTF-8', 'IND.8859-1', 'IND', 'Indonesian.UTF8',
+    'Indonesian.UTF-8', 'Indonesian.8859-1', 'Indonesian', 'Indonesia', 'id', 'ID', 'en_US.UTF8', 'en_US.UTF-8', 'en_US.8859-1', 'en_US',
+    'American', 'ENG', 'English');
+
+    $date = strftime("%B", time());
+    $bulan = DB::table('tb_bulan_ajaran')->where('bulan',$date)->first();
+    $siswa = DB::table('tb_siswa')->where('kelas','LIKE','%Alumni%')->get();
+    $filter = 'false';
+    $tahunSekarang =  date("Y");
         $data=array(
             'siswa' =>$siswa,
+            'bulanini' => $bulan->bulan,
+            'date' => $date,
+            'tahunSekarang' => $tahunSekarang,
+            'bulan' => $bulan,
+            'filter' => $filter,
         );
         return view('kegiatan.index',$data);
     }

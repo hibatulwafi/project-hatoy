@@ -39,6 +39,8 @@ class SPPImport implements ToModel , WithHeadingRow
             $bulan = 6;
         }
 
+        if( $row['keterangan'] == 'SPP'){
+
         $spp = new SPP([
             'id_jenis_pem' => 1,
             'nis' => $row['nis'],
@@ -46,10 +48,46 @@ class SPPImport implements ToModel , WithHeadingRow
             'pembayaran_tahun' => $row['pembayaran_tahun'],
             'jumlah' => $row['jumlah'],
             'keterangan' => $row['keterangan'],
+            'method' => $row['method'],
+            'diskon' => $row['diskon'],
             'id_petugas' => 0,
             'status_pembayaran' => 1,
             'dibuat_pada' => now(),
         ]);
+
+        }elseif( $row['keterangan'] == 'kegiatan'){
+            $spp = new SPP([
+            'id_jenis_pem' => 2,
+            'nis' => $row['nis'],
+            'pembayaran_bulan' => $bulan,
+            'pembayaran_tahun' => $row['pembayaran_tahun'],
+            'jumlah' => $row['jumlah'],
+            'keterangan' => $row['keterangan'],
+            'method' => $row['method'],
+            'diskon' => $row['diskon'],
+            'id_petugas' => 0,
+            'status_pembayaran' => 1,
+            'dibuat_pada' => now(),
+        ]);
+
+        }elseif( $row['keterangan'] == 'pangkal'){
+          $spp = new SPP([
+            'id_jenis_pem' => 3,
+            'nis' => $row['nis'],
+            'pembayaran_bulan' => $bulan,
+            'pembayaran_tahun' => $row['pembayaran_tahun'],
+            'jumlah' => $row['jumlah'],
+            'keterangan' => $row['keterangan'],
+            'method' => $row['method'],
+            'diskon' => $row['diskon'],
+            'id_petugas' => 0,
+            'status_pembayaran' => 1,
+            'dibuat_pada' => now(),
+        ]);
+        }else{
+            echo "Error";
+        }
+
 
         return $spp;
     }

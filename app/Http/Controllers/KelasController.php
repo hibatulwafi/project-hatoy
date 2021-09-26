@@ -39,26 +39,29 @@ class KelasController extends Controller
             $update= DB::table('tb_siswa')->where('nis',$row->nis)->update([
                 'kelas' => 'VIII '.substr($row->kelas,-1),
             ]);
-            echo $row->nama_siswa.' Naik Ke Kelas VIII '.substr($row->kelas,-1) .' dari kelas '.$row->kelas.'</br>';
+            /*echo $row->nama_siswa.' Naik Ke Kelas VIII '.substr($row->kelas,-1) .' dari kelas '.$row->kelas.'</br>';*/
 
             }elseif (substr($row->kelas,0,-2) == 'VIII') {
             
             $update= DB::table('tb_siswa')->where('nis',$row->nis)->update([
                 'kelas' => 'IX '.substr($row->kelas,-1),
             ]);
-            echo $row->nama_siswa.' Naik Ke Kelas IX '.substr($row->kelas,-1) .' dari kelas '.$row->kelas.'</br>';
+            /*echo $row->nama_siswa.' Naik Ke Kelas IX '.substr($row->kelas,-1) .' dari kelas '.$row->kelas.'</br>';*/
             
             }elseif(substr($row->kelas,0,-2) == 'IX'){
             
             $update= DB::table('tb_siswa')->where('nis',$row->nis)->update([
                 'kelas' => 'Alumni '.substr($row->kelas,-1),
             ]);
-            echo $row->nama_siswa.' Anda Alumni '.'dari kelas '.$row->kelas.'</br>';
-            
+            /*echo $row->nama_siswa.' Anda Alumni '.'dari kelas '.$row->kelas.'</br>';*/
             }else{
-               echo 'Error';
+          
             }
+           
         }
+         session()->flash('error','Selamat Kenaikan Kelas');
+         return redirect()->route('tabelsiswa');
+
     }
 
     public function rollback(){

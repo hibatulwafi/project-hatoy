@@ -42,7 +42,7 @@
               ex ratione. Aliquid!
             </p>
           </div>
-          <img src="{{ asset('img/log.svg') }}" class="image" alt="" />
+          <img src="{{ asset('img/login.svg') }}" class="image" alt="" />
         </div>
       </div>
     </div>

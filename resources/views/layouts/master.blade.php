@@ -6,14 +6,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
         <title>Hatoy Sukabumi</title>
         <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
-        <script src="{{ url('https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js') }}"></script>
-        <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
-        <link href="{{ url('https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css') }}" rel="stylesheet" />
-        <link
-rel="stylesheet"
-href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css"
-type="text/css"
-/>
     <link rel="stylesheet" href="{{ asset('/css/dropify.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/jquery.fancybox.min.css') }}">
 
@@ -42,8 +34,7 @@ type="text/css"
     </div>
     <!-- END wrapper -->
     @include('layouts.footer-script') 
-    @yield('script-bottom')   
-    @yield('map')  
+    @yield('script-bottom')    
     @yield('script') 
  </body>
     
